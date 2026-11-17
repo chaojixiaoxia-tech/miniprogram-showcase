@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>礼品册小程序 · 定制预览与开店手册</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <!-- 顶部深色定制工作室头卡 -->
+    <header class="studio-hero">
+      <div class="studio-hero__top">
+        <span class="studio-pill"><span class="studio-pill__dot"></span>定制演示 · 0 风险试错</span>
+        <button type="button" class="share-card-btn" id="open-poster-btn">
+          <span class="svg-ic" id="ic-share-hero"></span>
+          <span>生成分享名片</span>
+        </button>
+      </div>
+      <h1 class="studio-hero__title" id="hero-slogan">想要什么功能都能提 · 随时改到满意为止</h1>
+      <p class="studio-hero__sub" id="hero-subslogan">先体验实机前后台效果，不满意分文不收</p>
+    </header>
+
+    <!-- 紧凑三栏合作明白卡 -->
+    <section class="clarity-grid" id="hero-value-trio" aria-label="合作核心说明"></section>
+
+    <!-- 首屏痛点暴击：过去手工管店 vs 换上这套小程序 -->
+    <section class="pain-gain-card" id="pain-vs-gain" aria-label="管店效率对比"></section>
+
+    <main>
+      <!-- 01 实机预览（首屏直接可点按） -->
+      <section id="panel-preview" class="section-panel is-active">
+        <!-- 4 套 UI 风格与版式选择器 -->
+        <div class="theme-picker-card">
+          <div class="theme-picker-card__head">
+            <span class="theme-picker-card__title">挑一套您喜欢的风格与版式</span>
+            <span class="theme-picker-card__sub">点选即切换配色、行业店名与商品排版</span>
+          </div>
+          <div class="theme-grid" id="theme-grid" role="radiogroup" aria-label="UI风格与版式选择"></div>
+          <button type="button" class="m-btn m-btn--dark m-btn--block" id="copy-theme-btn">已选中：版本A · 一键复制我喜欢的方案</button>
+        </div>
+
+        <div class="sim-toolbar">
+          <div class="seg-switch" role="tablist" aria-label="预览视角切换">
+            <button type="button" class="seg-btn is-active" data-perspective="customer">顾客选礼前台</button>
+            <button type="button" class="seg-btn" data-perspective="owner">店主手机后台</button>
+          </div>
+          <div class="util-row">
+            <div class="currency-pills" id="currency-pills" role="group" aria-label="演示币种称呼"></div>
+            <button type="button" class="ghost-link-btn" id="open-custom-wall-btn">定制功能点播与对比</button>
+          </div>
+          <div class="custom-brand-row" aria-label="换上您的店名与积分名试试">
+            <input type="text" class="custom-brand-input" id="custom-shop-input" maxlength="16" placeholder="输入您的店名（如：甄选礼馆）" aria-label="自定义店名">
+            <input type="text" class="custom-brand-input" id="custom-unit-input" maxlength="8" placeholder="输入积分名（如：积分/星币）" aria-label="自定义积分名">
+          </div>
+        </div>
+
+        <div class="phone-frame" id="phone-frame">
+          <div class="wx-topbar">
+            <div class="wx-topbar__left">
+              <span class="wx-brand-mark" id="wx-brand-mark">礼</span>
+              <span class="wx-topbar__title" id="wx-nav-title">甄选好礼馆</span>
+            </div>
+            <div class="wx-capsule" aria-hidden="true">
+              <span>•••</span>
+              <span class="wx-capsule__sep"></span>
+              <span>◎</span>
+            </div>
+          </div>
+
+          <div class="phone-mode-strip" id="phone-mode-strip"></div>
+          <div class="owner-nav-bar" id="owner-nav-bar" hidden></div>
+          <div class="phone-screen" id="phone-screen"></div>
+          <div class="wx-tabbar" id="wx-tabbar"></div>
+
+          <div class="phone-modal-mask" id="phone-modal-mask" hidden>
+            <div class="phone-modal-sheet" id="phone-modal-sheet"></div>
+          </div>
+        </div>
+
+        <div class="sim-footnote">
+          <span>本地虚构演示数据，不连真实门店与云端</span>
+          <button type="button" class="text-btn" id="open-poster-btn-2">分享名片</button>
+        </div>
+
+        <!-- 苹果官网式：定制功能互动选配台 -->
+        <section class="configurator-card" id="custom-configurator" aria-label="定制功能选配台"></section>
+      </section>
+
+      <!-- 02 注册与过审（手风琴折叠步骤卡） -->
+      <section id="panel-audit" class="section-panel" hidden>
+        <div class="section-head-card">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;">
+            <div>
+              <h2 class="section-head-card__title">怎么注册与过审（4 步口诀）</h2>
+              <p class="section-head-card__desc" id="audit-progress-text">已完成 0 / 4 步 · 点击展开详情</p>
+            </div>
+            <button type="button" class="text-btn" id="audit-reset-btn">重置</button>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="audit-progress-fill" style="width:0%"></div>
+          </div>
+        </div>
+
+        <div class="accordion-list" id="audit-steps-list"></div>
+      </section>
+
+      <!-- 03 后台怎么用（4 张直连实机卡片） -->
+      <section id="panel-backend" class="section-panel" hidden>
+        <div class="section-head-card">
+          <h2 class="section-head-card__title">店主手机后台怎么用</h2>
+          <p class="section-head-card__desc">不用开电脑，点右侧按钮直接跳进实机后台试用</p>
+        </div>
+
+        <div class="backend-list" id="backend-steps-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- 底部常驻毛玻璃拇指导航栏 -->
+  <nav class="bottom-dock" aria-label="底部主导航">
+    <button type="button" class="dock-btn is-active" data-section="preview">
+      <span class="dock-btn__num">01</span>
+      <span>实机预览</span>
+    </button>
+    <button type="button" class="dock-btn" data-section="audit">
+      <span class="dock-btn__num">02</span>
+      <span>注册与过审</span>
+    </button>
+    <button type="button" class="dock-btn" data-section="backend">
+      <span class="dock-btn__num">03</span>
+      <span>后台怎么用</span>
+    </button>
+  </nav>
+
+  <!-- 高定黑金分享名片 / 定制点播浮层 -->
+  <div class="poster-modal-mask" id="poster-modal-mask" hidden>
+    <div class="poster-modal-wrap">
+      <div class="poster-card" id="poster-card-body"></div>
+      <span class="poster-modal-tip" id="poster-modal-tip">手机截屏上方名片，即可直接发进微信聊天</span>
+      <button type="button" class="m-btn m-btn--block" id="close-poster-btn">关闭</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="./data/showcase-bundle.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

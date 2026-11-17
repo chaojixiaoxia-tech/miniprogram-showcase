@@ -1,0 +1,5351 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>礼品册小程序 · 定制预览与开店手册</title>
+  <style>
+:root {
+  --bg: #F5F5F7;
+  --card: #FFFFFF;
+  --ink: #0F172A;
+  --ink-2: #334155;
+  --muted: #64748B;
+  --line: rgba(15, 23, 42, 0.08);
+  --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.06);
+
+  --emerald: #059669;
+  --emerald-soft: #ECFDF5;
+  --gold: #D97706;
+  --gold-soft: #FFFBEB;
+  --accent: #0F172A;
+  --blue: #2563EB;
+  --blue-soft: #EFF6FF;
+
+  --r-sm: 12px;
+  --r-md: 16px;
+  --r-lg: 22px;
+  --r-pill: 9999px;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input, textarea, select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.svg-ic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.app-shell {
+  max-width: 520px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 12px 12px 104px;
+}
+
+/* 顶部深色高定定制名片卡 */
+.studio-hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  padding: 16px;
+  background: linear-gradient(145deg, #111827 0%, #1E293B 100%);
+  color: #F8FAFC;
+  box-shadow: 0 16px 36px -12px rgba(15, 23, 42, 0.35);
+  margin-bottom: 10px;
+}
+
+.studio-hero::after {
+  content: "";
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.22) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.studio-hero__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.studio-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: var(--r-pill);
+  background: rgba(16, 185, 129, 0.16);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #6EE7B7;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.studio-pill__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #34D399;
+}
+
+.share-card-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 38px;
+  padding: 6px 12px;
+  border-radius: var(--r-pill);
+  border: 1px solid rgba(251, 191, 36, 0.45);
+  background: rgba(251, 191, 36, 0.12);
+  color: #FDE68A;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.studio-hero__title {
+  margin: 0 0 4px;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.studio-hero__sub {
+  margin: 0;
+  font-size: 15px;
+  color: #CBD5E1;
+}
+
+/* 紧凑三栏合作明白卡 */
+.clarity-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.clarity-col {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 10px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.clarity-col__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.clarity-col__num {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--emerald);
+}
+
+.clarity-col__title {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.clarity-col__line {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.25;
+}
+
+.clarity-col__desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.section-panel[hidden] {
+  display: none;
+}
+
+/* 实机控制栏 */
+.sim-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.seg-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--r-md);
+  background: #E2E8F0;
+}
+
+.seg-btn {
+  min-height: 44px;
+  border: none;
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--ink-2);
+  font-size: 15px;
+  font-weight: 700;
+  transition: all 0.16s ease;
+}
+
+.seg-btn.is-active {
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+}
+
+.util-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.currency-pills {
+  display: flex;
+  gap: 6px;
+}
+
+.currency-pill {
+  min-height: 36px;
+  padding: 4px 12px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.currency-pill.is-active {
+  background: var(--ink);
+  color: #FFFFFF;
+  border-color: var(--ink);
+}
+
+.ghost-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 36px;
+  padding: 4px 12px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink-2);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* 逼真微信小程序模拟器 */
+.phone-frame {
+  position: relative;
+  width: 100%;
+  background: #F8FAFC;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 20px 44px -16px rgba(15, 23, 42, 0.18);
+  display: flex;
+  flex-direction: column;
+  height: 610px;
+}
+
+.wx-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+.wx-topbar__left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wx-brand-mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--ink);
+  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.wx-topbar__title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.wx-capsule {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 11px;
+  border-radius: var(--r-pill);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.wx-capsule__sep {
+  width: 1px;
+  height: 13px;
+  background: rgba(15, 23, 42, 0.16);
+}
+
+.phone-mode-strip {
+  padding: 7px 14px;
+  font-size: 14px;
+  font-weight: 700;
+  background: #F1F5F9;
+  color: var(--ink-2);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.phone-mode-strip.is-owner {
+  background: #0F172A;
+  color: #E2E8F0;
+}
+
+.owner-nav-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  padding: 8px;
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+.owner-nav-bar[hidden] {
+  display: none;
+}
+
+.owner-nav__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 44px;
+  padding: 6px 4px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--line);
+  background: #F8FAFC;
+  color: var(--ink-2);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.owner-nav__btn.is-active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #FFFFFF;
+}
+
+.phone-screen {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+}
+
+.wx-tabbar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: var(--card);
+  border-top: 1px solid var(--line);
+  padding: 6px 4px;
+  flex-shrink: 0;
+}
+
+.wx-tabbar[hidden] {
+  display: none;
+}
+
+.wx-tabbar__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: 48px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  position: relative;
+}
+
+.wx-tabbar__item.is-active {
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.wx-tabbar__badge {
+  position: absolute;
+  top: 2px;
+  right: 14px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: var(--r-pill);
+  background: var(--emerald);
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+}
+
+/* 手机内部精致卡片 */
+.m-trio-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.m-trio-cell {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  padding: 8px;
+}
+
+.m-trio-cell__lbl {
+  display: block;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--emerald);
+}
+
+.m-trio-cell__tx {
+  display: block;
+  font-size: 14px;
+  color: var(--ink-2);
+  margin-top: 2px;
+  line-height: 1.3;
+}
+
+.m-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.04);
+}
+
+.m-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.m-card__title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.m-card__meta {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.m-entry-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.m-entry-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-height: 58px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: #F8FAFC;
+  text-align: left;
+}
+
+.m-entry-btn strong {
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.m-entry-btn span {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* 精美电商感商品卡片 */
+.m-gift-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.m-gift-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.m-gift-card__top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.m-gift-illus {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.m-gift-card__name {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.m-gift-card__sub {
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.m-gift-card__price {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 2px 10px;
+  border-radius: var(--r-pill);
+  background: var(--emerald-soft);
+  color: var(--emerald);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.m-gift-card__actions {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+}
+
+.m-chip-row {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+}
+
+.m-chip {
+  flex-shrink: 0;
+  min-height: 38px;
+  padding: 6px 14px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink-2);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.m-chip.is-active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #FFFFFF;
+}
+
+/* 按钮与表单 */
+.m-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 8px 14px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.m-btn--dark {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #FFFFFF;
+}
+
+.m-btn--emerald {
+  background: var(--emerald);
+  border-color: var(--emerald);
+  color: #FFFFFF;
+}
+
+.m-btn--block {
+  width: 100%;
+}
+
+.m-btn--sm {
+  min-height: 38px;
+  padding: 5px 12px;
+  font-size: 14px;
+}
+
+.m-input, .m-textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: var(--r-sm);
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  background: #F8FAFC;
+  font-size: 15px;
+}
+
+.m-textarea {
+  min-height: 68px;
+  resize: vertical;
+}
+
+.m-form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.m-form-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink-2);
+}
+
+.m-row-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.m-list-item {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 12px;
+}
+
+.m-list-item__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.m-status-tag {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: var(--r-pill);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.m-status-tag--pending {
+  background: var(--gold-soft);
+  color: var(--gold);
+}
+
+.m-status-tag--done {
+  background: var(--emerald-soft);
+  color: var(--emerald);
+}
+
+.m-address-box {
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: var(--r-sm);
+  background: #F8FAFC;
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.m-inline-edit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.phone-modal-mask {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: rgba(15, 23, 42, 0.48);
+  display: flex;
+  align-items: flex-end;
+}
+
+.phone-modal-mask[hidden] {
+  display: none;
+}
+
+.phone-modal-sheet {
+  width: 100%;
+  max-height: 82%;
+  overflow-y: auto;
+  background: var(--card);
+  border-radius: 20px 20px 0 0;
+  padding: 16px;
+}
+
+.text-btn {
+  border: none;
+  background: transparent;
+  color: var(--blue);
+  font-size: 14px;
+  font-weight: 700;
+  padding: 4px 0;
+}
+
+.sim-footnote {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: var(--r-md);
+  background: var(--card);
+  border: 1px solid var(--line);
+  font-size: 14px;
+  color: var(--ink-2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* 02 注册与过审：手风琴步骤卡 */
+.section-head-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow);
+}
+
+.section-head-card__title {
+  margin: 0 0 4px;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.section-head-card__desc {
+  margin: 0;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.progress-track {
+  margin-top: 10px;
+  height: 8px;
+  border-radius: var(--r-pill);
+  background: #E2E8F0;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--emerald);
+  border-radius: var(--r-pill);
+  transition: width 0.25s ease;
+}
+
+.accordion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.acc-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.acc-card.is-completed {
+  border-color: rgba(5, 150, 105, 0.35);
+}
+
+.acc-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px;
+  border: none;
+  background: transparent;
+  text-align: left;
+  min-height: 60px;
+}
+
+.acc-head__left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.acc-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: var(--ink);
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.acc-card.is-completed .acc-num {
+  background: var(--emerald);
+}
+
+.acc-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.acc-badge {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.acc-body {
+  padding: 0 14px 14px;
+  border-top: 1px solid var(--line);
+}
+
+.acc-body[hidden] {
+  display: none;
+}
+
+.path-box {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: var(--r-sm);
+  background: var(--blue-soft);
+  color: var(--blue);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.step-bullets {
+  margin: 10px 0;
+  padding-left: 20px;
+  font-size: 16px;
+  color: var(--ink-2);
+}
+
+.step-bullets li {
+  margin-bottom: 5px;
+}
+
+.pitfall-box {
+  padding: 10px 12px;
+  border-radius: var(--r-sm);
+  background: var(--gold-soft);
+  color: #92400E;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.acc-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* 03 后台怎么用：紧凑直连卡 */
+.backend-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.backend-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 14px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.backend-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.backend-card__title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.backend-card__ic {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #F1F5F9;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.backend-card__title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.backend-card__path {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.backend-try-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 44px;
+  padding: 8px 14px;
+  border-radius: var(--r-pill);
+  border: none;
+  background: var(--ink);
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* 底部常驻毛玻璃拇指导航栏 (Bottom Dock) */
+.bottom-dock {
+  position: fixed;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  width: calc(100% - 24px);
+  max-width: 496px;
+  z-index: 45;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  padding: 6px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.14);
+}
+
+.dock-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: 52px;
+  border: none;
+  border-radius: 16px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 0.16s ease;
+}
+
+.dock-btn__num {
+  font-size: 14px;
+  font-weight: 800;
+  opacity: 0.7;
+}
+
+.dock-btn.is-active {
+  background: var(--ink);
+  color: #FFFFFF;
+}
+
+.dock-btn.is-active .dock-btn__num {
+  color: #6EE7B7;
+  opacity: 1;
+}
+
+/* 黑金定制名片浮层 */
+.poster-modal-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(15, 23, 42, 0.78);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.poster-modal-mask[hidden] {
+  display: none;
+}
+
+.poster-modal-wrap {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.poster-card {
+  background: linear-gradient(155deg, #111827 0%, #1E293B 100%);
+  border: 1px solid rgba(251, 191, 36, 0.45);
+  border-radius: 24px;
+  padding: 20px 18px;
+  color: #F8FAFC;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+}
+
+.poster-card__kicker {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: var(--r-pill);
+  background: rgba(251, 191, 36, 0.15);
+  border: 1px solid rgba(251, 191, 36, 0.4);
+  color: #FDE68A;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.poster-card__title {
+  margin: 12px 0 4px;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.poster-card__sub {
+  margin: 0 0 14px;
+  font-size: 15px;
+  color: #6EE7B7;
+  font-weight: 600;
+}
+
+.poster-trio {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.poster-trio-item {
+  padding: 10px 12px;
+  border-radius: var(--r-sm);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.poster-trio-item strong {
+  display: block;
+  font-size: 16px;
+  color: #FDE68A;
+}
+
+.poster-trio-item span {
+  display: block;
+  font-size: 15px;
+  color: #E2E8F0;
+  margin-top: 2px;
+}
+
+.poster-card__foot {
+  text-align: center;
+  font-size: 14px;
+  color: #94A3B8;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.poster-modal-tip {
+  text-align: center;
+  color: #FFFFFF;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* 对比与点播浮层内表格 */
+.compare-row {
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  padding: 10px;
+  margin-bottom: 8px;
+}
+
+.compare-row__cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.compare-col--market {
+  background: #F1F5F9;
+  color: var(--muted);
+  padding: 6px 8px;
+  border-radius: 8px;
+}
+
+.compare-col--ours {
+  background: var(--emerald-soft);
+  color: var(--emerald);
+  font-weight: 700;
+  padding: 6px 8px;
+  border-radius: 8px;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 86px;
+  transform: translateX(-50%);
+  z-index: 70;
+  max-width: 90vw;
+  padding: 10px 18px;
+  border-radius: var(--r-pill);
+  background: rgba(15, 23, 42, 0.94);
+  color: #FFFFFF;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+}
+
+.toast[hidden] {
+  display: none;
+}
+
+/* ── 4 套 UI 风格与版式选择器 ── */
+.theme-picker-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 12px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.theme-picker-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.theme-picker-card__title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.theme-picker-card__sub {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.theme-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.theme-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 10px;
+  border-radius: var(--r-sm);
+  border: 2px solid var(--line);
+  background: #F8FAFC;
+  text-align: left;
+  transition: all 0.16s ease;
+}
+
+.theme-tile.is-active {
+  background: var(--card);
+  border-color: var(--ink);
+  box-shadow: 0 6px 16px -6px rgba(15, 23, 42, 0.18);
+}
+
+.theme-tile__top {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.theme-tile__code {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.theme-swatches {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.theme-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(15, 23, 42, 0.15);
+}
+
+.theme-tile__sub {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-2);
+  line-height: 1.3;
+}
+
+.theme-tile__for {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.3;
+}
+
+/* ── 顶部工作室头卡按所选主题联动辉光 ── */
+.studio-hero[data-ui-theme="crimson"] {
+  background: linear-gradient(145deg, #450A0A 0%, #7F1D1D 100%);
+}
+.studio-hero[data-ui-theme="tea"] {
+  background: linear-gradient(145deg, #3E2723 0%, #5D4037 100%);
+}
+.studio-hero[data-ui-theme="glacier"] {
+  background: linear-gradient(145deg, #0F172A 0%, #1E3A8A 100%);
+}
+
+/* ── 4 套主题色彩变量覆盖（作用在 #phone-frame） ── */
+.phone-frame[data-ui-theme="obsidian"] {
+  --p-bg: #F8FAFC;
+  --p-card: #FFFFFF;
+  --p-topbar: #111827;
+  --p-topbar-ink: #F8FAFC;
+  --p-primary: #111827;
+  --p-accent: #059669;
+  --p-accent-soft: #ECFDF5;
+  --p-vip-bg: linear-gradient(135deg, #111827 0%, #1F2937 100%);
+  --p-vip-ink: #FDE68A;
+  --p-radius: 16px;
+}
+
+.phone-frame[data-ui-theme="crimson"] {
+  --p-bg: #FFF7F5;
+  --p-card: #FFFFFF;
+  --p-topbar: linear-gradient(90deg, #DC2626 0%, #991B1B 100%);
+  --p-topbar-ink: #FFFFFF;
+  --p-primary: #DC2626;
+  --p-accent: #D97706;
+  --p-accent-soft: #FEF3C7;
+  --p-vip-bg: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+  --p-vip-ink: #FEF08A;
+  --p-radius: 18px;
+}
+
+.phone-frame[data-ui-theme="tea"] {
+  --p-bg: #FAF6F0;
+  --p-card: #FFFDF9;
+  --p-topbar: #FAF6F0;
+  --p-topbar-ink: #4A2C18;
+  --p-primary: #8C4A27;
+  --p-accent: #3F6212;
+  --p-accent-soft: #ECFCCB;
+  --p-vip-bg: linear-gradient(135deg, #F3EAE0 0%, #E7D8C9 100%);
+  --p-vip-ink: #4A2C18;
+  --p-radius: 12px;
+}
+
+.phone-frame[data-ui-theme="glacier"] {
+  --p-bg: #F0F7FF;
+  --p-card: #FFFFFF;
+  --p-topbar: #2563EB;
+  --p-topbar-ink: #FFFFFF;
+  --p-primary: #2563EB;
+  --p-accent: #1D4ED8;
+  --p-accent-soft: #DBEAFE;
+  --p-vip-bg: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+  --p-vip-ink: #FFFFFF;
+  --p-radius: 10px;
+}
+
+.phone-frame[data-ui-theme] {
+  background: var(--p-bg);
+}
+
+.phone-frame[data-ui-theme] .phone-screen {
+  background: var(--p-bg);
+}
+
+.phone-frame[data-ui-theme] .wx-topbar {
+  background: var(--p-topbar);
+  color: var(--p-topbar-ink);
+  border-bottom-color: rgba(15, 23, 42, 0.08);
+}
+
+.phone-frame[data-ui-theme] .wx-topbar__title {
+  color: var(--p-topbar-ink);
+}
+
+.phone-frame[data-ui-theme] .wx-brand-mark {
+  background: var(--p-accent);
+  color: #FFFFFF;
+}
+
+.phone-frame[data-ui-theme] .m-vip-card {
+  background: var(--p-vip-bg);
+  color: var(--p-vip-ink);
+  border-radius: var(--p-radius);
+  padding: 14px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.phone-frame[data-ui-theme] .m-btn--emerald {
+  background: var(--p-primary);
+  border-color: var(--p-primary);
+}
+
+.phone-frame[data-ui-theme] .m-gift-card__price {
+  background: var(--p-accent-soft);
+  color: var(--p-accent);
+}
+
+/* ── 4 种截然不同的商品排版模式（data-layout-mode） ── */
+/* A: 双列精品画廊 */
+.phone-frame[data-layout-mode="gallery"] .m-gift-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.phone-frame[data-layout-mode="gallery"] .m-gift-card {
+  border-radius: var(--p-radius);
+  padding: 10px;
+}
+.phone-frame[data-layout-mode="gallery"] .m-gift-card__top {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+.phone-frame[data-layout-mode="gallery"] .m-gift-illus {
+  width: 100%;
+  height: 82px;
+}
+.phone-frame[data-layout-mode="gallery"] .m-gift-card__actions {
+  grid-template-columns: 1fr;
+}
+
+/* B: 朱砂喜庆大横幅抢兑版 */
+.phone-frame[data-layout-mode="banner"] .m-gift-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.phone-frame[data-layout-mode="banner"] .m-gift-card {
+  border: 2px solid rgba(220, 38, 38, 0.25);
+  border-radius: var(--p-radius);
+  padding: 12px;
+}
+.phone-frame[data-layout-mode="banner"] .m-gift-card__actions {
+  grid-template-columns: 1fr auto;
+}
+
+/* C: 温润茶白纸质礼册横排版（左图右文） */
+.phone-frame[data-layout-mode="editorial"] .m-gift-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.phone-frame[data-layout-mode="editorial"] .m-gift-card {
+  border-left: 4px solid #8C4A27;
+  border-radius: var(--p-radius);
+  background: #FFFDF9;
+}
+.phone-frame[data-layout-mode="editorial"] .m-gift-illus {
+  width: 84px;
+  height: 84px;
+}
+
+/* D: 冰川科技紧凑数字看板版 */
+.phone-frame[data-layout-mode="compact"] .m-gift-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.phone-frame[data-layout-mode="compact"] .m-gift-card {
+  padding: 8px;
+  border-radius: var(--p-radius);
+  border-color: rgba(37, 99, 235, 0.2);
+}
+.phone-frame[data-layout-mode="compact"] .m-gift-card__top {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+.phone-frame[data-layout-mode="compact"] .m-gift-illus {
+  width: 100%;
+  height: 58px;
+}
+.phone-frame[data-layout-mode="compact"] .m-gift-card__actions {
+  grid-template-columns: 1fr;
+}
+
+/* 自定义店名与积分名实时输入栏 */
+.custom-brand-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.custom-brand-input {
+  width: 100%;
+  min-height: 40px;
+  padding: 6px 12px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.custom-brand-input:focus {
+  outline: 2px solid var(--blue);
+  outline-offset: -1px;
+}
+
+/* =====================================================================
+   第 7 轮：4 套完全独立的 UI 骨架样式（A 曜石黑金 / B 朱砂喜庆 / C 温润茶白 / D 冰川科技）
+   ===================================================================== */
+
+/* ── 版本 A：曜石黑金（尊享黑卡 + 2x2 专柜画廊 + 悬浮黑金底栏） ── */
+.obs-vip-card {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  border-radius: 18px;
+  padding: 14px;
+  color: #F8FAFC;
+  margin-bottom: 10px;
+  box-shadow: 0 10px 24px -8px rgba(15, 23, 42, 0.35);
+}
+
+.obs-vip-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.obs-vip-card__num {
+  font-size: 26px;
+  font-weight: 900;
+  color: #FDE68A;
+  line-height: 1.15;
+}
+
+.obs-vip-card__acts {
+  display: flex;
+  gap: 6px;
+}
+
+.obs-pill-btn {
+  min-height: 34px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  background: rgba(212, 175, 55, 0.14);
+  color: #FDE68A;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.obs-vip-card__foot {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(212, 175, 55, 0.22);
+  font-size: 14px;
+  color: #CBD5E1;
+  letter-spacing: 0.03em;
+}
+
+.obs-cat-rail {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+.obs-cat-pill {
+  flex-shrink: 0;
+  min-height: 36px;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  border: 1px solid rgba(15, 23, 42, 0.15);
+  background: #FFFFFF;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.obs-cat-pill.is-active {
+  background: #0F172A;
+  border-color: #D4AF37;
+  color: #FDE68A;
+}
+
+.obs-gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.obs-gift-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 6px 16px -6px rgba(15, 23, 42, 0.08);
+}
+
+.obs-gift-stage {
+  position: relative;
+  height: 92px;
+  background: linear-gradient(145deg, #111827 0%, #1E293B 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.obs-gift-badge {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(212, 175, 55, 0.65);
+  color: #FDE68A;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.obs-gift-body {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.obs-gift-name {
+  font-size: 15px;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.3;
+}
+
+.obs-gold-btn {
+  margin-top: auto;
+  min-height: 38px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1.5px solid #B48A1E;
+  background: #FFFDF7;
+  color: #855E08;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.wx-tabbar.wx-tabbar--obsidian {
+  margin: 0 10px 10px;
+  border-radius: 9999px;
+  background: #0F172A;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  padding: 4px 8px;
+}
+.wx-tabbar.wx-tabbar--obsidian .wx-tabbar__item { color: #94A3B8; }
+.wx-tabbar.wx-tabbar--obsidian .wx-tabbar__item.is-active { color: #FDE68A; }
+
+/* ── 版本 B：朱砂喜庆（弧形红金头图 + 金色福袋 + 通栏爆款大横幅） ── */
+.cri-curved-hero {
+  background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+  border-radius: 16px 16px 28px 28px;
+  padding: 14px;
+  color: #FFFFFF;
+  margin-bottom: 10px;
+  box-shadow: 0 10px 22px -8px rgba(220, 38, 38, 0.45);
+}
+
+.cri-curved-hero__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.cri-curved-hero__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 900;
+  color: #FEF08A;
+}
+
+.cri-rule-circle {
+  min-width: 48px;
+  min-height: 36px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  border: 1.5px solid #FDE68A;
+  background: rgba(254, 240, 138, 0.16);
+  color: #FEF08A;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.cri-steps-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  margin-top: 10px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.16);
+  font-size: 14px;
+  font-weight: 700;
+  color: #FEF9C3;
+}
+
+.cri-bag-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: linear-gradient(90deg, #FEF3C7 0%, #FDE68A 100%);
+  border: 1.5px solid #F59E0B;
+  color: #78350F;
+  margin-bottom: 10px;
+}
+
+.cri-bag-bar__val {
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.cri-bag-btn {
+  min-height: 36px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  border: none;
+  background: #B91C1C;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.cri-banner-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cri-banner-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #FFFFFF;
+  border: 2px solid #FECACA;
+  border-radius: 16px;
+  padding: 12px;
+  overflow: hidden;
+}
+
+.cri-banner-tag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 2px 10px;
+  border-radius: 0 0 12px 0;
+  background: #DC2626;
+  color: #FEF08A;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.cri-banner-illus {
+  width: 78px;
+  height: 78px;
+  border-radius: 12px;
+  background: #FFF1F2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 10px;
+}
+
+.cri-banner-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cri-banner-name {
+  font-size: 16px;
+  font-weight: 900;
+  color: #7F1D1D;
+}
+
+.cri-banner-cost {
+  font-size: 17px;
+  font-weight: 900;
+  color: #DC2626;
+}
+
+.cri-prog-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #B45309;
+  font-weight: 700;
+}
+
+.cri-prog-track {
+  flex: 1;
+  height: 6px;
+  border-radius: 9999px;
+  background: #FEE2E2;
+  overflow: hidden;
+}
+
+.cri-prog-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #F59E0B, #DC2626);
+}
+
+.cri-grab-btn {
+  min-height: 40px;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  border: none;
+  background: linear-gradient(90deg, #DC2626 0%, #EA580C 100%);
+  color: #FFFFFF;
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.wx-tabbar.wx-tabbar--crimson {
+  background: #FFFFFF;
+  border-top: 2px solid #FECACA;
+}
+.wx-tabbar.wx-tabbar--crimson .wx-tabbar__item.is-active { color: #DC2626; }
+
+/* ── 版本 C：温润茶白（东方杂志 · 书眉顶条 + 左竖书签 + 右画册流） ── */
+.tea-scope {
+  font-family: "Songti SC", "Noto Serif SC", Georgia, "PingFang SC", serif;
+}
+
+.tea-masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1.5px solid #D6C7B8;
+  background: #FAF6F0;
+  margin-bottom: 10px;
+}
+
+.tea-seal {
+  display: inline-block;
+  padding: 2px 6px;
+  border: 1.5px solid #991B1B;
+  color: #991B1B;
+  font-size: 14px;
+  font-weight: 800;
+  border-radius: 4px;
+  margin-right: 6px;
+}
+
+.tea-masthead__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #7C3F1C;
+  font-weight: 700;
+}
+
+.tea-split-body {
+  display: grid;
+  grid-template-columns: 27% 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+.tea-bookmarks {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tea-bookmark-btn {
+  min-height: 44px;
+  padding: 8px 6px;
+  border: 1px solid #DFD3C5;
+  border-left: 3px solid transparent;
+  border-radius: 6px;
+  background: #F4EDE4;
+  color: #6B4F3A;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: left;
+}
+
+.tea-bookmark-btn.is-active {
+  background: #FFFDF9;
+  border-left-color: #7C3F1C;
+  color: #4A2C18;
+  font-weight: 900;
+}
+
+.tea-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tea-gift-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background: #FFFDF9;
+  border: 1px solid #C8B6A6;
+  outline: 1px solid #E6D9CC;
+  outline-offset: -4px;
+  border-radius: 6px;
+}
+
+.tea-no-tag {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 14px;
+  color: #8C4A27;
+  font-weight: 700;
+}
+
+.tea-gift-illus {
+  width: 68px;
+  height: 68px;
+  border-radius: 6px;
+  background: #F7F1E8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tea-gift-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tea-gift-name {
+  font-size: 16px;
+  font-weight: 800;
+  color: #3E2723;
+  padding-right: 42px;
+}
+
+.tea-gift-note {
+  font-size: 14px;
+  color: #6D4C41;
+}
+
+.tea-outline-btn {
+  align-self: flex-start;
+  min-height: 36px;
+  padding: 4px 12px;
+  border: 1.5px solid #7C3F1C;
+  background: transparent;
+  color: #7C3F1C;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.wx-tabbar.wx-tabbar--tea {
+  background: #FAF6F0;
+  border-top: 1px solid #D6C7B8;
+}
+.wx-tabbar.wx-tabbar--tea .wx-tabbar__item.is-active { color: #7C3F1C; }
+
+/* ── 版本 D：冰川科技（Bento 双拼磁贴 + 区间过滤 + 紧凑网格 + 悬浮结算条） ── */
+.gla-bento-top {
+  display: grid;
+  grid-template-columns: 55% 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.gla-dash-tile {
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+  color: #FFFFFF;
+  border-radius: 14px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.gla-dash-num {
+  font-size: 28px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.gla-dash-id {
+  font-size: 14px;
+  opacity: 0.85;
+  font-variant-numeric: tabular-nums;
+}
+
+.gla-side-tiles {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gla-quick-tile {
+  flex: 1;
+  min-height: 44px;
+  padding: 6px 10px;
+  border-radius: 12px;
+  border: 1px solid #BFDBFE;
+  background: #FFFFFF;
+  color: #1E3A8A;
+  font-size: 14px;
+  font-weight: 800;
+  text-align: left;
+}
+
+.gla-filter-bar {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+.gla-filter-pill {
+  flex-shrink: 0;
+  min-height: 36px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid #CBD5E1;
+  background: #FFFFFF;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.gla-filter-pill.is-active {
+  background: #2563EB;
+  border-color: #2563EB;
+  color: #FFFFFF;
+}
+
+.gla-compact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding-bottom: 58px;
+}
+
+.gla-gift-card {
+  position: relative;
+  background: #FFFFFF;
+  border: 1px solid #DBEAFE;
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.gla-gift-illus {
+  height: 62px;
+  border-radius: 8px;
+  background: #EFF6FF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gla-gift-name {
+  font-size: 15px;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.3;
+}
+
+.gla-gift-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.gla-gift-cost {
+  font-size: 15px;
+  font-weight: 900;
+  color: #2563EB;
+  font-variant-numeric: tabular-nums;
+}
+
+.gla-plus-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: #2563EB;
+  color: #FFFFFF;
+  font-size: 18px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gla-floating-cart {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-top: -48px;
+  z-index: 12;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 9999px;
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(10px);
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
+}
+
+.gla-checkout-btn {
+  min-height: 36px;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  border: none;
+  background: #2563EB;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.wx-tabbar.wx-tabbar--glacier {
+  background: #FFFFFF;
+  border-top: 1px solid #DBEAFE;
+}
+.wx-tabbar.wx-tabbar--glacier .wx-tabbar__item.is-active { color: #2563EB; }
+
+/* ── 店主后台随主题变换控制台头部 ── */
+.owner-console-head {
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.owner-console-head--obsidian {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  color: #FDE68A;
+}
+
+.owner-console-head--crimson {
+  background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+  color: #FEF08A;
+}
+
+.owner-console-head--tea {
+  background: #FAF6F0;
+  border: 1.5px solid #C8B6A6;
+  color: #4A2C18;
+  font-family: "Songti SC", "Noto Serif SC", Georgia, serif;
+}
+
+.owner-console-head--glacier {
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+  color: #FFFFFF;
+}
+
+/* =====================================================================
+   第 8 轮：王牌商业转化级组件样式
+   ===================================================================== */
+
+/* 痛点暴击前后对比卡 */
+.pain-gain-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 14px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow);
+}
+
+.pain-gain-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.pain-gain-card__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.pain-gain-card__sub {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--emerald);
+}
+
+.pain-gain-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: 4px;
+  border-radius: var(--r-sm);
+  background: #F1F5F9;
+  margin-bottom: 10px;
+}
+
+.pain-gain-tab {
+  min-height: 38px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.pain-gain-tab.is-pain {
+  background: #FEF2F2;
+  color: #B91C1C;
+  box-shadow: 0 2px 6px rgba(185, 28, 28, 0.08);
+}
+
+.pain-gain-tab.is-gain {
+  background: #ECFDF5;
+  color: #047857;
+  box-shadow: 0 2px 6px rgba(4, 120, 87, 0.08);
+}
+
+.pain-gain-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pain-gain-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--r-sm);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.pain-gain-row--pain {
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  color: #7F1D1D;
+}
+
+.pain-gain-row--gain {
+  background: #ECFDF5;
+  border: 1px solid #A7F3D0;
+  color: #064E3B;
+}
+
+.pain-gain-num {
+  font-size: 14px;
+  font-weight: 900;
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+/* 仿真兑换播报条 */
+.live-ticker-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: var(--r-pill);
+  background: rgba(15, 23, 42, 0.06);
+  color: var(--ink-2);
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.live-ticker-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--emerald);
+  flex-shrink: 0;
+}
+
+/* 商品商业要素：划线价 & 库存紧张角标 */
+.market-price-del {
+  font-size: 14px;
+  color: var(--muted);
+  text-decoration: line-through;
+  margin-left: 4px;
+}
+
+.stock-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.stock-hot-tag {
+  padding: 1px 7px;
+  border-radius: 6px;
+  background: #FEF2F2;
+  color: #DC2626;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+/* 半屏商品详情抽屉 */
+.detail-hero-box {
+  height: 140px;
+  border-radius: var(--r-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.detail-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 6px 0 10px;
+}
+
+.detail-cost-big {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--emerald);
+}
+
+.spec-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 12px;
+}
+
+.spec-pill {
+  min-height: 38px;
+  padding: 6px 14px;
+  border-radius: var(--r-sm);
+  border: 1.5px solid var(--line);
+  background: #F8FAFC;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.spec-pill.is-active {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #FFFFFF;
+}
+
+/* 30秒当老板爽感引导条 */
+.boss-guide-bar {
+  background: #FFFBEB;
+  border: 1px solid #FDE68A;
+  border-radius: var(--r-sm);
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.boss-guide-bar__title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #92400E;
+  margin-bottom: 6px;
+}
+
+.boss-guide-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.boss-guide-pill {
+  min-height: 34px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  border: 1px solid #F59E0B;
+  background: #FFFFFF;
+  color: #92400E;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.new-order-badge {
+  padding: 2px 8px;
+  border-radius: 9999px;
+  background: #DC2626;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 800;
+  margin-left: 6px;
+}
+
+.sync-cta-banner {
+  margin-top: 8px;
+  padding: 10px;
+  border-radius: var(--r-sm);
+  background: var(--emerald-soft);
+  border: 1px solid #A7F3D0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #065F46;
+}
+
+/* 苹果官网式：定制功能互动选配台 */
+.configurator-card {
+  margin-top: 14px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+.configurator-card__title {
+  margin: 0 0 4px;
+  font-size: 19px;
+  font-weight: 900;
+  color: var(--ink);
+}
+
+.configurator-card__sub {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.config-base-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.config-base-chip {
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  background: #ECFDF5;
+  color: #047857;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.config-mod-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.config-mod-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 10px;
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--line);
+  background: #F8FAFC;
+  text-align: left;
+  transition: all 0.14s ease;
+}
+
+.config-mod-tile.is-selected {
+  background: #EFF6FF;
+  border-color: var(--blue);
+  box-shadow: 0 4px 12px -4px rgba(37, 99, 235, 0.2);
+}
+
+.config-mod-tile__scene {
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: #E2E8F0;
+  color: var(--ink-2);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.config-mod-tile.is-selected .config-mod-tile__scene {
+  background: var(--blue);
+  color: #FFFFFF;
+}
+
+.config-mod-tile__title {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.config-mod-tile__benefit {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.config-wish-box {
+  margin-bottom: 12px;
+}
+
+.config-summary-bar {
+  padding: 12px;
+  border-radius: var(--r-md);
+  background: #0F172A;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+</style>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- 顶部深色定制工作室头卡 -->
+    <header class="studio-hero">
+      <div class="studio-hero__top">
+        <span class="studio-pill"><span class="studio-pill__dot"></span>定制演示 · 0 风险试错</span>
+        <button type="button" class="share-card-btn" id="open-poster-btn">
+          <span class="svg-ic" id="ic-share-hero"></span>
+          <span>生成分享名片</span>
+        </button>
+      </div>
+      <h1 class="studio-hero__title" id="hero-slogan">想要什么功能都能提 · 随时改到满意为止</h1>
+      <p class="studio-hero__sub" id="hero-subslogan">先体验实机前后台效果，不满意分文不收</p>
+    </header>
+
+    <!-- 紧凑三栏合作明白卡 -->
+    <section class="clarity-grid" id="hero-value-trio" aria-label="合作核心说明"></section>
+
+    <!-- 首屏痛点暴击：过去手工管店 vs 换上这套小程序 -->
+    <section class="pain-gain-card" id="pain-vs-gain" aria-label="管店效率对比"></section>
+
+    <main>
+      <!-- 01 实机预览（首屏直接可点按） -->
+      <section id="panel-preview" class="section-panel is-active">
+        <!-- 4 套 UI 风格与版式选择器 -->
+        <div class="theme-picker-card">
+          <div class="theme-picker-card__head">
+            <span class="theme-picker-card__title">挑一套您喜欢的风格与版式</span>
+            <span class="theme-picker-card__sub">点选即切换配色、行业店名与商品排版</span>
+          </div>
+          <div class="theme-grid" id="theme-grid" role="radiogroup" aria-label="UI风格与版式选择"></div>
+          <button type="button" class="m-btn m-btn--dark m-btn--block" id="copy-theme-btn">已选中：版本A · 一键复制我喜欢的方案</button>
+        </div>
+
+        <div class="sim-toolbar">
+          <div class="seg-switch" role="tablist" aria-label="预览视角切换">
+            <button type="button" class="seg-btn is-active" data-perspective="customer">顾客选礼前台</button>
+            <button type="button" class="seg-btn" data-perspective="owner">店主手机后台</button>
+          </div>
+          <div class="util-row">
+            <div class="currency-pills" id="currency-pills" role="group" aria-label="演示币种称呼"></div>
+            <button type="button" class="ghost-link-btn" id="open-custom-wall-btn">定制功能点播与对比</button>
+          </div>
+          <div class="custom-brand-row" aria-label="换上您的店名与积分名试试">
+            <input type="text" class="custom-brand-input" id="custom-shop-input" maxlength="16" placeholder="输入您的店名（如：甄选礼馆）" aria-label="自定义店名">
+            <input type="text" class="custom-brand-input" id="custom-unit-input" maxlength="8" placeholder="输入积分名（如：积分/星币）" aria-label="自定义积分名">
+          </div>
+        </div>
+
+        <div class="phone-frame" id="phone-frame">
+          <div class="wx-topbar">
+            <div class="wx-topbar__left">
+              <span class="wx-brand-mark" id="wx-brand-mark">礼</span>
+              <span class="wx-topbar__title" id="wx-nav-title">甄选好礼馆</span>
+            </div>
+            <div class="wx-capsule" aria-hidden="true">
+              <span>•••</span>
+              <span class="wx-capsule__sep"></span>
+              <span>◎</span>
+            </div>
+          </div>
+
+          <div class="phone-mode-strip" id="phone-mode-strip"></div>
+          <div class="owner-nav-bar" id="owner-nav-bar" hidden></div>
+          <div class="phone-screen" id="phone-screen"></div>
+          <div class="wx-tabbar" id="wx-tabbar"></div>
+
+          <div class="phone-modal-mask" id="phone-modal-mask" hidden>
+            <div class="phone-modal-sheet" id="phone-modal-sheet"></div>
+          </div>
+        </div>
+
+        <div class="sim-footnote">
+          <span>本地虚构演示数据，不连真实门店与云端</span>
+          <button type="button" class="text-btn" id="open-poster-btn-2">分享名片</button>
+        </div>
+
+        <!-- 苹果官网式：定制功能互动选配台 -->
+        <section class="configurator-card" id="custom-configurator" aria-label="定制功能选配台"></section>
+      </section>
+
+      <!-- 02 注册与过审（手风琴折叠步骤卡） -->
+      <section id="panel-audit" class="section-panel" hidden>
+        <div class="section-head-card">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;">
+            <div>
+              <h2 class="section-head-card__title">怎么注册与过审（4 步口诀）</h2>
+              <p class="section-head-card__desc" id="audit-progress-text">已完成 0 / 4 步 · 点击展开详情</p>
+            </div>
+            <button type="button" class="text-btn" id="audit-reset-btn">重置</button>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="audit-progress-fill" style="width:0%"></div>
+          </div>
+        </div>
+
+        <div class="accordion-list" id="audit-steps-list"></div>
+      </section>
+
+      <!-- 03 后台怎么用（4 张直连实机卡片） -->
+      <section id="panel-backend" class="section-panel" hidden>
+        <div class="section-head-card">
+          <h2 class="section-head-card__title">店主手机后台怎么用</h2>
+          <p class="section-head-card__desc">不用开电脑，点右侧按钮直接跳进实机后台试用</p>
+        </div>
+
+        <div class="backend-list" id="backend-steps-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- 底部常驻毛玻璃拇指导航栏 -->
+  <nav class="bottom-dock" aria-label="底部主导航">
+    <button type="button" class="dock-btn is-active" data-section="preview">
+      <span class="dock-btn__num">01</span>
+      <span>实机预览</span>
+    </button>
+    <button type="button" class="dock-btn" data-section="audit">
+      <span class="dock-btn__num">02</span>
+      <span>注册与过审</span>
+    </button>
+    <button type="button" class="dock-btn" data-section="backend">
+      <span class="dock-btn__num">03</span>
+      <span>后台怎么用</span>
+    </button>
+  </nav>
+
+  <!-- 高定黑金分享名片 / 定制点播浮层 -->
+  <div class="poster-modal-mask" id="poster-modal-mask" hidden>
+    <div class="poster-modal-wrap">
+      <div class="poster-card" id="poster-card-body"></div>
+      <span class="poster-modal-tip" id="poster-modal-tip">手机截屏上方名片，即可直接发进微信聊天</span>
+      <button type="button" class="m-btn m-btn--block" id="close-poster-btn">关闭</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script>
+// Auto-generated by projects/项目运营/tools/build-showcase-data.py
+// Pure fictional offline data (Round 4: zero emoji, studio-grade).
+window.SHOWCASE_BUNDLE = {
+  "schemaVersion": "2026-11-18.v8",
+  "uiThemes": [
+    {
+      "id": "obsidian",
+      "code": "A",
+      "name": "曜石黑金",
+      "subtitle": "轻奢专柜风 · 双列画廊版",
+      "layoutMode": "gallery",
+      "bestFor": "高端卡礼 · 商务茗茶 · 轻奢百货",
+      "industryTag": "轻奢卡礼旗舰",
+      "recommendedShopName": "尚品黑金礼馆",
+      "recommendedSlogan": "尊享卡礼直兑 · 顺丰专柜直发",
+      "swatches": [
+        "#111827",
+        "#059669",
+        "#D4AF37"
+      ],
+      "copyTemplate": "我选好了：喜欢【版本A：曜石黑金（双列画廊版）】+ 店名【{shopName}】+ 积分叫【{currency}】，想按这套风格帮我定制（随时改到满意）！"
+    },
+    {
+      "id": "crimson",
+      "code": "B",
+      "name": "朱砂喜庆",
+      "subtitle": "爆款福利风 · 大横幅抢兑版",
+      "layoutMode": "banner",
+      "bestFor": "年货节礼 · 福利商城 · 活动引流",
+      "industryTag": "高转化爆款福利",
+      "recommendedShopName": "鸿运好礼商城",
+      "recommendedSlogan": "达标即领爆款好物 · 限时热兑中",
+      "swatches": [
+        "#DC2626",
+        "#F59E0B",
+        "#FFF7F5"
+      ],
+      "copyTemplate": "我选好了：喜欢【版本B：朱砂喜庆（大横幅抢兑版）】+ 店名【{shopName}】+ 积分叫【{currency}】，想按这套风格帮我定制（随时改到满意）！"
+    },
+    {
+      "id": "tea",
+      "code": "C",
+      "name": "温润茶白",
+      "subtitle": "东方雅致风 · 纸质礼册横排版",
+      "layoutMode": "editorial",
+      "bestFor": "有机农产 · 滋补养生 · 手作伴手礼",
+      "industryTag": "东方雅礼臻选",
+      "recommendedShopName": "清欢茗礼社",
+      "recommendedSlogan": "一茶一礼皆心意 · 原产地甄选直发",
+      "swatches": [
+        "#8C4A27",
+        "#3F6212",
+        "#FAF6F0"
+      ],
+      "copyTemplate": "我选好了：喜欢【版本C：温润茶白（纸质礼册横排版）】+ 店名【{shopName}】+ 积分叫【{currency}】，想按这套风格帮我定制（随时改到满意）！"
+    },
+    {
+      "id": "glacier",
+      "code": "D",
+      "name": "冰川科技",
+      "subtitle": "清爽极简风 · 数字看板紧凑版",
+      "layoutMode": "compact",
+      "bestFor": "年轻社群 · 数码潮玩 · 效率控店主",
+      "industryTag": "极简效率潮玩",
+      "recommendedShopName": "极客优选兑换站",
+      "recommendedSlogan": "积分秒算秒兑 · 物流全自动追踪",
+      "swatches": [
+        "#2563EB",
+        "#0F172A",
+        "#F0F7FF"
+      ],
+      "copyTemplate": "我选好了：喜欢【版本D：冰川科技（数字看板紧凑版）】+ 店名【{shopName}】+ 积分叫【{currency}】，想按这套风格帮我定制（随时改到满意）！"
+    }
+  ],
+  "meta": {
+    "title": "礼品册小程序 · 定制预览与开店手册",
+    "subtitle": "想要什么功能都能提 · 随时改到满意为止 · 不满意不要钱",
+    "fictionalNotice": "本页全部商品、额度与订单均为本地演示数据，不连真实门店与云端。",
+    "currencyPresets": [
+      {
+        "key": "jifen",
+        "label": "积分",
+        "shopName": "甄选好礼馆",
+        "unitSuffix": "积分"
+      },
+      {
+        "key": "lidou",
+        "label": "礼豆",
+        "shopName": "心意伴手礼",
+        "unitSuffix": "礼豆"
+      },
+      {
+        "key": "quan",
+        "label": "兑换券",
+        "shopName": "尊享礼遇中心",
+        "unitSuffix": "张兑换券"
+      }
+    ]
+  },
+  "painVsGain": {
+    "title": "为什么身边店主都在换这套小程序？",
+    "subtitle": "每天少忙 2 小时，告别手工糊涂账",
+    "rows": [
+      {
+        "num": "01",
+        "pain": "微信连发 30 张礼品图刷屏，顾客翻半天还挨个问要多少分",
+        "gain": "甩一个码顾客自助看图选礼，系统自动算分扣分，不用回一句话"
+      },
+      {
+        "num": "02",
+        "pain": "靠表格或本子手算积分，月底算错一笔客户直接起疑心",
+        "gain": "每个客户积分增减全自动记账留痕，店员也能分权手机协管"
+      },
+      {
+        "num": "03",
+        "pain": "顾客发一段乱糟糟地址，手动拆姓名电话填快递单眼花缭乱",
+        "gain": "待发货列表点一下「一键复制整行地址」，3 秒直接粘贴打单"
+      },
+      {
+        "num": "04",
+        "pain": "临时换个活动规则或图片，找外包改代码要加钱还得等审核三天",
+        "gain": "手机后台随时改活动字、换客服码，保存 1 秒生效，永远免提审"
+      }
+    ]
+  },
+  "customConfigurator": {
+    "title": "想要什么功能随便提 · 勾选您的专属配置单",
+    "subtitle": "标配全含 · 热门定制模块点选即加 · 随时改到满意为止",
+    "baseIncluded": [
+      "双端独立小程序",
+      "手机随时改文案免提审",
+      "一键复制地址发货",
+      "Excel百件商品批量导入"
+    ],
+    "optionalModules": [
+      {
+        "id": "mod-cardcode",
+        "iconKey": "check",
+        "title": "实体卡册 / 提货卡密核销",
+        "benefit": "一卡一密，刮开直接兑礼",
+        "scene": "卡册/礼券商户"
+      },
+      {
+        "id": "mod-referral",
+        "iconKey": "users",
+        "title": "老客带新客裂变返积分",
+        "benefit": "老客分享自动得奖励",
+        "scene": "口碑拉新"
+      },
+      {
+        "id": "mod-tier",
+        "iconKey": "sparkles",
+        "title": "阶梯达标专区 / 限时秒杀",
+        "benefit": "不同档位解锁不同专柜",
+        "scene": "大促冲量"
+      },
+      {
+        "id": "mod-staff",
+        "iconKey": "sliders",
+        "title": "多店员手机协同管店",
+        "benefit": "4位顾客号一键授权店员审单",
+        "scene": "多人团队"
+      },
+      {
+        "id": "mod-vip",
+        "iconKey": "gift",
+        "title": "VIP 会员等级与专属折扣价",
+        "benefit": "普通客户与大客户看不同积分价",
+        "scene": "分层运营"
+      },
+      {
+        "id": "mod-flow",
+        "iconKey": "edit",
+        "title": "专属行业流程定制",
+        "benefit": "办卡/存款/社群/门店核销流程按需定做",
+        "scene": "行业专属"
+      }
+    ],
+    "wishPlaceholder": "还有别的特殊想法？写在这里（比如：想加转盘抽奖 / 想对接自有表格）"
+  },
+  "valueTrio": {
+    "whatYouGet": {
+      "key": "get",
+      "num": "01",
+      "iconKey": "gift",
+      "title": "您将拥有",
+      "headline": "双端独立小程序",
+      "summary": "顾客选礼前台 + 店主手机后台，功能按需定制。"
+    },
+    "whatYouPay": {
+      "key": "pay",
+      "num": "02",
+      "iconKey": "shield",
+      "title": "零风险承诺",
+      "headline": "不满意分文不收",
+      "summary": "先看实机效果，配色功能随时改到满意为止。"
+    },
+    "whatToDo": {
+      "key": "do",
+      "num": "03",
+      "iconKey": "sliders",
+      "title": "极简开店",
+      "headline": "只备 3 样基础资料",
+      "summary": "店名微信码与商品表交给我，10 分钟照图过审上线。"
+    }
+  },
+  "marketingData": {
+    "heroSlogan": "想要什么功能都能提 · 随时改到满意为止",
+    "subSlogan": "先体验实机前后台效果，不满意分文不收",
+    "threeGuarantees": [
+      {
+        "id": "g-modify",
+        "iconKey": "sliders",
+        "title": "随时改到满意",
+        "promise": "配色、排版、按钮、流程一对一调到顺手。"
+      },
+      {
+        "id": "g-refund",
+        "iconKey": "shield",
+        "title": "不满意不要钱",
+        "promise": "先试实机效果，达不到预期分文不收。"
+      },
+      {
+        "id": "g-custom",
+        "iconKey": "sparkles",
+        "title": "功能按需定制",
+        "promise": "专属积分规则、推荐玩法、后台小工具都能加。"
+      }
+    ],
+    "comparisonTable": [
+      {
+        "dimension": "改需求",
+        "market": "改一点就加钱",
+        "ours": "随时改到满意为止"
+      },
+      {
+        "dimension": "试错成本",
+        "market": "先付款不退款",
+        "ours": "不满意不要钱"
+      },
+      {
+        "dimension": "加功能",
+        "market": "死板模板改不了",
+        "ours": "想要什么都能提"
+      },
+      {
+        "dimension": "审核上线",
+        "market": "自己摸索常被拒",
+        "ours": "4 步大图避坑陪跑"
+      },
+      {
+        "dimension": "日常管店",
+        "market": "必须开电脑操作",
+        "ours": "手机改文案免提审"
+      }
+    ],
+    "customFeatureExamples": [
+      {
+        "id": "feat-coin",
+        "iconKey": "sparkles",
+        "tag": "专属积分叫法",
+        "desc": "积分/礼豆/兑换券随您定"
+      },
+      {
+        "id": "feat-referral",
+        "iconKey": "users",
+        "tag": "老带新推荐奖",
+        "desc": "自动记录谁推荐的客户"
+      },
+      {
+        "id": "feat-tier",
+        "iconKey": "gift",
+        "tag": "阶梯达标送礼",
+        "desc": "多档位活动与新客体验礼"
+      },
+      {
+        "id": "feat-staff",
+        "iconKey": "check",
+        "tag": "多店员协同管",
+        "desc": "4位数字号一键授权伙计"
+      },
+      {
+        "id": "feat-batch",
+        "iconKey": "truck",
+        "tag": "商品表秒导入",
+        "desc": "几百件礼品一次批量上架"
+      },
+      {
+        "id": "feat-ui",
+        "iconKey": "edit",
+        "tag": "专属配色页面",
+        "desc": "高端/喜庆风格随心换"
+      }
+    ],
+    "posterCard": {
+      "headline": "专属礼品册小程序定制",
+      "subline": "想要功能随便提 · 随时改到满意 · 不满意不要钱",
+      "trio": [
+        {
+          "num": "01",
+          "iconKey": "gift",
+          "title": "您将拥有",
+          "text": "顾客选礼前台 + 店主手机后台，独立云数据"
+        },
+        {
+          "num": "02",
+          "iconKey": "shield",
+          "title": "零风险承诺",
+          "text": "先看实机效果，改到满意为止，不满意分文不收"
+        },
+        {
+          "num": "03",
+          "iconKey": "sliders",
+          "title": "极简开店",
+          "text": "只需店名/微信码/商品表，10分钟照图注册过审"
+        }
+      ],
+      "footerNote": "长按或截屏转发微信朋友 · 手机端即开即试"
+    }
+  },
+  "previewData": {
+    "customerScreens": {
+      "liveTickers": [
+        "刚刚 尾号8801 兑换了 青瓷功夫茶具礼盒 · 顺丰包邮",
+        "2分钟前 尾号3920 兑换了 麦饭石不粘煎炒锅 · 专柜正品",
+        "5分钟前 尾号6104 兑换了 轻音万向轮登机箱 · 极速发出",
+        "8分钟前 尾号5518 兑换了 高速负离子吹风机 · 顺丰包邮"
+      ],
+      "customerValueTrio": [
+        {
+          "key": "get",
+          "iconKey": "gift",
+          "label": "得到什么",
+          "text": "正品好礼包邮到家"
+        },
+        {
+          "key": "pay",
+          "iconKey": "shield",
+          "label": "付出什么",
+          "text": "按标注币值达标兑"
+        },
+        {
+          "key": "do",
+          "iconKey": "check",
+          "label": "要怎么做",
+          "text": "选礼→达标→填址领"
+        }
+      ],
+      "balanceCard": {
+        "balance": 120,
+        "memberCode": "8801",
+        "hint": "达标自动到账"
+      },
+      "steps3": [
+        "01 选礼品",
+        "02 达标攒币",
+        "03 填址领礼"
+      ],
+      "guideEntries": [
+        {
+          "key": "req",
+          "title": "参与条件",
+          "desc": "先看资格再选礼",
+          "lines": [
+            "1. 按要求完成指定活动达标",
+            "2. 实名信息真实有效"
+          ]
+        },
+        {
+          "key": "flow",
+          "title": "兑换步骤",
+          "desc": "选礼→达标→领货",
+          "lines": [
+            "1. 挑好礼品加入礼栈",
+            "2. 达标后提交收货地址"
+          ]
+        },
+        {
+          "key": "faq",
+          "title": "常见疑问",
+          "desc": "多久发货？包邮吗？",
+          "lines": [
+            "达标后 1-3 个工作日包邮发出"
+          ]
+        },
+        {
+          "key": "coin",
+          "title": "币值规则",
+          "desc": "一礼一价明码标币",
+          "lines": [
+            "余额够标注币值即可直接兑换"
+          ]
+        }
+      ],
+      "categories": [
+        "全部",
+        "茶具礼盒",
+        "厨房电器",
+        "出行箱包",
+        "个护好物"
+      ],
+      "costFilters": [
+        {
+          "key": "all",
+          "label": "全部"
+        },
+        {
+          "key": "low",
+          "label": "30以内"
+        },
+        {
+          "key": "mid",
+          "label": "31-80"
+        },
+        {
+          "key": "high",
+          "label": "80以上"
+        }
+      ],
+      "gifts": [
+        {
+          "id": "g-demo-1",
+          "name": "青瓷功夫茶具礼盒",
+          "category": "茶具礼盒",
+          "cost": 40,
+          "marketPrice": "¥399",
+          "soldCount": 128,
+          "stockLeft": 6,
+          "tags": [
+            "顺丰包邮",
+            "专柜正品"
+          ],
+          "specs": [
+            "尊享礼盒装",
+            "标准自用装"
+          ],
+          "hot": true,
+          "badge": "热兑",
+          "illustration": "tea",
+          "tint": "#ECFDF5",
+          "accent": "#059669",
+          "getText": "一壶四杯礼盒包邮",
+          "payText": "达标 40 积分即可",
+          "desc": "高温烧制青瓷釉面，配手提礼盒包装。",
+          "detailSummary": "精选景德镇高温青瓷胎体，釉面温润如玉，礼盒烫金手提袋直发，送礼体面。"
+        },
+        {
+          "id": "g-demo-2",
+          "name": "麦饭石不粘煎炒锅",
+          "category": "厨房电器",
+          "cost": 60,
+          "marketPrice": "¥498",
+          "soldCount": 96,
+          "stockLeft": 4,
+          "tags": [
+            "顺丰包邮",
+            "两年质保"
+          ],
+          "specs": [
+            "30cm含盖礼盒",
+            "32cm加深款"
+          ],
+          "hot": true,
+          "badge": "热兑",
+          "illustration": "pan",
+          "tint": "#FFFBEB",
+          "accent": "#D97706",
+          "getText": "30cm不粘锅+玻璃盖",
+          "payText": "达标 60 积分即可",
+          "desc": "少油烟聚能锅底，燃气电磁炉通用。",
+          "detailSummary": "加厚复合聚能锅底受热均匀，轻油少烟易冲洗，适配燃气灶与电磁炉。"
+        },
+        {
+          "id": "g-demo-3",
+          "name": "轻音万向轮登机箱",
+          "category": "出行箱包",
+          "cost": 90,
+          "marketPrice": "¥699",
+          "soldCount": 74,
+          "stockLeft": 3,
+          "tags": [
+            "顺丰包邮",
+            "专柜正品"
+          ],
+          "specs": [
+            "20寸登机款·曜石黑",
+            "20寸登机款·冰川银"
+          ],
+          "hot": true,
+          "badge": "精选",
+          "illustration": "suitcase",
+          "tint": "#EFF6FF",
+          "accent": "#2563EB",
+          "getText": "20寸铝框登机箱",
+          "payText": "达标 90 积分即可",
+          "desc": "PC防刮箱体加海关锁，顺滑静音轮。",
+          "detailSummary": "德国拜耳PC防刮箱壳配合360度轻音万向轮与TSA密码锁，差旅免托运直接登机。"
+        },
+        {
+          "id": "g-demo-4",
+          "name": "316不锈钢真空保温杯",
+          "category": "茶具礼盒",
+          "cost": 20,
+          "marketPrice": "¥168",
+          "soldCount": 215,
+          "stockLeft": 9,
+          "tags": [
+            "极速发货",
+            "专柜正品"
+          ],
+          "specs": [
+            "500ml磨砂黑",
+            "500ml奶霜白"
+          ],
+          "hot": false,
+          "badge": "入门",
+          "illustration": "thermos",
+          "tint": "#F1F5F9",
+          "accent": "#334155",
+          "getText": "500ml保温杯包邮",
+          "payText": "达标 20 积分即可",
+          "desc": "长效锁温 12 小时，商务磨砂手感。",
+          "detailSummary": "食品级316不锈钢内胆耐腐蚀无异味，12小时长效保温保冷，通勤车载皆宜。"
+        },
+        {
+          "id": "g-demo-5",
+          "name": "商超通用电子礼品卡",
+          "category": "个护好物",
+          "cost": 30,
+          "marketPrice": "¥300",
+          "soldCount": 182,
+          "stockLeft": 12,
+          "tags": [
+            "电子直发",
+            "全国通用"
+          ],
+          "specs": [
+            "电子卡密秒发",
+            "实体卡包邮寄"
+          ],
+          "hot": false,
+          "badge": "灵活",
+          "illustration": "card",
+          "tint": "#FEF2F2",
+          "accent": "#DC2626",
+          "getText": "实体/电子礼卡1张",
+          "payText": "达标 30 积分即可",
+          "desc": "支持多门店自由选购日常百货。",
+          "detailSummary": "全国连锁商超及线上专区通用，下单即可选择电子卡密秒发或实体精致卡套邮寄。"
+        },
+        {
+          "id": "g-demo-6",
+          "name": "高速负离子吹风机",
+          "category": "个护好物",
+          "cost": 75,
+          "marketPrice": "¥599",
+          "soldCount": 89,
+          "stockLeft": 5,
+          "tags": [
+            "顺丰包邮",
+            "专柜正品"
+          ],
+          "specs": [
+            "礼盒版配风嘴",
+            "标准简装版"
+          ],
+          "hot": false,
+          "badge": "人气",
+          "illustration": "dryer",
+          "tint": "#EEF2FF",
+          "accent": "#4F46E5",
+          "getText": "恒温高速吹风机",
+          "payText": "达标 75 积分即可",
+          "desc": "低噪大风量快速干发，柔顺护发。",
+          "detailSummary": "11万转高速无刷电机配合智能恒温芯片与高浓度负离子，3分钟速干不伤发质。"
+        }
+      ],
+      "initialWishlist": [
+        "g-demo-1",
+        "g-demo-4"
+      ],
+      "initialApplies": [
+        {
+          "id": "ord-demo-101",
+          "giftId": "g-demo-2",
+          "giftName": "麦饭石不粘煎炒锅",
+          "cost": 60,
+          "status": "shipped",
+          "statusLabel": "已发货",
+          "receiver": "示例张先生",
+          "phone": "13800001001",
+          "address": "示例市中心区演示路88号",
+          "expressCompany": "示例快递",
+          "trackingNo": "DEMO10000001",
+          "createdAt": "昨天"
+        },
+        {
+          "id": "ord-demo-102",
+          "giftId": "g-demo-1",
+          "giftName": "青瓷功夫茶具礼盒",
+          "cost": 40,
+          "status": "pending",
+          "statusLabel": "待发货",
+          "receiver": "示例李女士",
+          "phone": "13800001002",
+          "address": "示例市高新区样本街16号",
+          "expressCompany": "",
+          "trackingNo": "",
+          "createdAt": "今天"
+        }
+      ]
+    },
+    "ownerScreens": {
+      "navTabs": [
+        {
+          "key": "applies",
+          "iconKey": "truck",
+          "label": "待发货",
+          "sub": "一键复制地址"
+        },
+        {
+          "key": "shop",
+          "iconKey": "edit",
+          "label": "改文案",
+          "sub": "手机改秒生效"
+        },
+        {
+          "key": "gifts",
+          "iconKey": "gift",
+          "label": "管商品",
+          "sub": "一键改价上新"
+        },
+        {
+          "key": "customers",
+          "iconKey": "users",
+          "label": "管客户",
+          "sub": "一键加减币"
+        }
+      ],
+      "customers": [
+        {
+          "code": "8801",
+          "nickname": "示例张先生",
+          "phone": "13800001001",
+          "balance": 120
+        },
+        {
+          "code": "8802",
+          "nickname": "示例李女士",
+          "phone": "13800001002",
+          "balance": 55
+        },
+        {
+          "code": "8803",
+          "nickname": "示例王同学",
+          "phone": "13800001003",
+          "balance": 200
+        }
+      ],
+      "initialLogs": [
+        {
+          "id": "log-1",
+          "customerCode": "8801",
+          "customerName": "示例张先生",
+          "delta": 180,
+          "balanceAfter": 180,
+          "reason": "达标发币",
+          "time": "昨天"
+        },
+        {
+          "id": "log-2",
+          "customerCode": "8801",
+          "customerName": "示例张先生",
+          "delta": -60,
+          "balanceAfter": 120,
+          "reason": "兑换不粘煎炒锅",
+          "time": "昨天"
+        }
+      ],
+      "shopSettings": {
+        "shopName": "甄选礼赠馆",
+        "serviceWechat": "demo_service",
+        "welcomeTitle": "欢迎来到甄选礼赠",
+        "welcomeLinesText": "正品好礼直发到家，达标即可挑选兑换。",
+        "admins": [
+          {
+            "code": "8809",
+            "name": "店员小陈"
+          }
+        ]
+      }
+    }
+  },
+  "auditTutorial": {
+    "title": "注册小程序与过审（4 步清单）",
+    "subtitle": "点击任意一步展开操作要点，打钩自动跳到下一步",
+    "steps": [
+      {
+        "id": "audit-1",
+        "stepNo": 1,
+        "stepNum": "01",
+        "iconKey": "check",
+        "title": "注册小程序账号",
+        "badge": "起步",
+        "wherePath": "mp.weixin.qq.com → 立即注册 → 小程序",
+        "bigSteps": [
+          "有已认证公众号：点【快速注册】免 300 元",
+          "无公众号：用个体户或企业营业执照注册",
+          "法人微信扫码完成实名认证"
+        ],
+        "oneLineWarning": "避坑：开兑换商城别用个人主体，必须用营业执照。",
+        "copySummary": "第1步：有认证公众号走快速注册免300元；无公众号到 mp.weixin.qq.com 用营业执照注册并法人扫码认证。"
+      },
+      {
+        "id": "audit-2",
+        "stepNo": 2,
+        "stepNum": "02",
+        "iconKey": "shield",
+        "title": "选对【百货/礼品】类目并备案",
+        "badge": "过审核心",
+        "wherePath": "基本设置 → 服务类目 + 小程序备案",
+        "bigSteps": [
+          "类目选：商家自营 > 百货 / 礼品 / 日用",
+          "备案传：营业执照 + 法人身份证 + 人脸核验",
+          "提交后紧盯短信：24 小时内点工信部链接确认"
+        ],
+        "oneLineWarning": "避坑：千万别选金融/银行类目，工信部短信超时必退回。",
+        "copySummary": "第2步：类目选「商家自营>百货/礼品」；备案提交后24小时内务必点工信部核验短信。"
+      },
+      {
+        "id": "audit-3",
+        "stepNo": 3,
+        "stepNum": "03",
+        "iconKey": "users",
+        "title": "复制 AppID 并加我为开发者",
+        "badge": "对接代码",
+        "wherePath": "开发设置复制 AppID · 成员管理加项目成员",
+        "bigSteps": [
+          "开发 → 开发设置 → 复制 wx 开头的 AppID 发我",
+          "管理 → 成员管理 → 添加我的微信号",
+          "权限勾选：【开发者 + 体验者】两项"
+        ],
+        "oneLineWarning": "提示：不用给我管理员密码，加成员权限即可。",
+        "copySummary": "第3步：开发设置复制AppID发我；成员管理加我为项目成员，勾选开发者+体验者权限。"
+      },
+      {
+        "id": "audit-4",
+        "stepNo": 4,
+        "stepNum": "04",
+        "iconKey": "sparkles",
+        "title": "配隐私指引 → 纯净提审 → 手机改文案",
+        "badge": "一遍过秘籍",
+        "wherePath": "服务内容声明 → 用户隐私保护指引 → 提交审核",
+        "bigSteps": [
+          "隐私指引勾选：收货地址、手机号、相册（仅传图）",
+          "首次提审保持纯净百货积分商城，点提交审核",
+          "过审发布后，在手机后台改活动文案秒生效（免再审）"
+        ],
+        "oneLineWarning": "秘籍：首次提审别填敏感返现词，上架后再手机后台热改。",
+        "copySummary": "第4步：隐私指引勾地址/手机号/相册；首次纯净商城过审发布后，再进手机后台改活动文案。"
+      }
+    ]
+  },
+  "backendTutorial": {
+    "title": "上架后店主手机怎么管店",
+    "subtitle": "点右侧按钮，直接跳回实机预览体验对应功能",
+    "steps": [
+      {
+        "id": "backend-1",
+        "stepNo": 1,
+        "stepNum": "01",
+        "iconKey": "truck",
+        "title": "待发货：一键复制地址",
+        "entryPath": "店主管理 → 发货",
+        "previewTarget": {
+          "role": "owner",
+          "tab": "applies"
+        },
+        "bigSteps": [
+          "点【待发货】筛出新兑换单",
+          "点一下复制“姓名+电话+地址”",
+          "回填快递单号，顾客秒看物流"
+        ],
+        "oneLineTip": "告别聊天记录翻地址，防重防漏单"
+      },
+      {
+        "id": "backend-2",
+        "stepNo": 2,
+        "stepNum": "02",
+        "iconKey": "edit",
+        "title": "改文案：手机改字秒生效",
+        "entryPath": "店主管理 → 店铺",
+        "previewTarget": {
+          "role": "owner",
+          "tab": "shop"
+        },
+        "bigSteps": [
+          "随时改欢迎语、活动说明与客服微信",
+          "点保存立刻生效，不用重新提审",
+          "输 4 位顾客号就能加店员一起管"
+        ],
+        "oneLineTip": "输入安装口令认领后即可全店掌管"
+      },
+      {
+        "id": "backend-3",
+        "stepNo": 3,
+        "stepNum": "03",
+        "iconKey": "gift",
+        "title": "管商品：一键改价上新",
+        "entryPath": "店主管理 → 礼品",
+        "previewTarget": {
+          "role": "owner",
+          "tab": "gifts"
+        },
+        "bigSteps": [
+          "开店几百件商品表格一次批量导",
+          "日常在手机点一下改币值、设热门",
+          "手机上就能直接新增下架礼品"
+        ],
+        "oneLineTip": "热门商品自动排在顾客首页最显眼处"
+      },
+      {
+        "id": "backend-4",
+        "stepNo": 4,
+        "stepNum": "04",
+        "iconKey": "users",
+        "title": "管客户：一键加减币",
+        "entryPath": "店主管理 → 客户",
+        "previewTarget": {
+          "role": "owner",
+          "tab": "customers"
+        },
+        "bigSteps": [
+          "输手机号或 4 位顾客号秒查余额",
+          "点一下加减币，自动记入总流水",
+          "每一笔发放和兑换账目清清楚楚"
+        ],
+        "oneLineTip": "告别手工 Excel 记错账、对不上账"
+      }
+    ]
+  }
+};
+
+</script>
+  <script>
+(function () {
+  'use strict';
+
+  var STORAGE_KEY = 'gift_showcase_audit_completed_v4';
+
+  var bundle = window.SHOWCASE_BUNDLE;
+  if (!bundle) {
+    document.body.innerHTML = '<div style="padding:24px;font-family:sans-serif;font-size:16px;color:#0F172A;">未找到演示数据包 data/showcase-bundle.js，请先运行 python tools/build-showcase-data.py。</div>';
+    return;
+  }
+
+  function clone(obj) {
+    return JSON.parse(JSON.stringify(obj));
+  }
+
+  function esc(str) {
+    return String(str == null ? '' : str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  /* ── 精致内联 SVG 图标库（0 Emoji） ── */
+  function svgIcon(key, size) {
+    var s = size || 18;
+    var paths = {
+      gift: '<path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>',
+      shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>',
+      sliders: '<line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/>',
+      sparkles: '<path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3z"/>',
+      truck: '<rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>',
+      edit: '<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>',
+      users: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+      check: '<polyline points="20 6 9 17 4 12"/>',
+      copy: '<rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+      share: '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>',
+      chevron: '<polyline points="6 9 12 15 18 9"/>',
+      home: '<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
+      grid: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>',
+      star: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+    };
+    var body = paths[key] || paths.sparkles;
+    return '<span class="svg-ic" aria-hidden="true"><svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + body + '</svg></span>';
+  }
+
+  /* ── 全彩多层次渐变高光立体商品矢量插画库 ── */
+  var svgUid = 0;
+  function giftSvg(illustration, accent, size) {
+    svgUid += 1;
+    var uid = svgUid;
+    var s = size || 58;
+    var map = {
+      tea: '<defs>' +
+        '<linearGradient id="gt-tray-' + uid + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#D97706"/><stop offset="100%" stop-color="#78350F"/></linearGradient>' +
+        '<linearGradient id="gt-pot-' + uid + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#6EE7B7"/><stop offset="55%" stop-color="#10B981"/><stop offset="100%" stop-color="#047857"/></linearGradient>' +
+        '<linearGradient id="gt-cup-' + uid + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#A7F3D0"/><stop offset="100%" stop-color="#059669"/></linearGradient>' +
+        '</defs>' +
+        '<ellipse cx="32" cy="52" rx="25" ry="5.5" fill="url(#gt-tray-' + uid + ')" opacity="0.9"/>' +
+        '<ellipse cx="32" cy="50.5" rx="22" ry="3.5" fill="#FDE68A" opacity="0.25"/>' +
+        '<path d="M12 31c-4 0-6 3-4 6 1.5 2 4 2 6 1" stroke="#065F46" stroke-width="2.6" stroke-linecap="round" fill="none"/>' +
+        '<path d="M36 28h6a4.5 4.5 0 0 1 0 9h-6" stroke="#047857" stroke-width="2.8" fill="none"/>' +
+        '<rect x="13" y="24" width="24" height="22" rx="10" fill="url(#gt-pot-' + uid + ')"/>' +
+        '<ellipse cx="25" cy="24" rx="9" ry="3" fill="#065F46"/>' +
+        '<path d="M19 23c0-3.5 2.7-6 6-6s6 2.5 6 6" fill="#34D399"/>' +
+        '<circle cx="25" cy="16" r="2.5" fill="#FDE68A"/>' +
+        '<ellipse cx="20" cy="33" rx="3" ry="6" fill="#FFFFFF" opacity="0.32"/>' +
+        '<rect x="43" y="36" width="12" height="11" rx="4" fill="url(#gt-cup-' + uid + ')"/>' +
+        '<ellipse cx="49" cy="36.5" rx="5.5" ry="2" fill="#ECFDF5"/>',
+      pan: '<defs>' +
+        '<radialGradient id="gp-body-' + uid + '" cx="38%" cy="35%" r="65%"><stop offset="0%" stop-color="#475569"/><stop offset="65%" stop-color="#1E293B"/><stop offset="100%" stop-color="#0F172A"/></radialGradient>' +
+        '<linearGradient id="gp-rim-' + uid + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#E2E8F0"/><stop offset="100%" stop-color="#94A3B8"/></linearGradient>' +
+        '<linearGradient id="gp-hdl-' + uid + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#B45309"/></linearGradient>' +
+        '</defs>' +
+        '<ellipse cx="27" cy="34" rx="18" ry="15" fill="rgba(15,23,42,0.14)"/>' +
+        '<circle cx="27" cy="30" r="17" fill="url(#gp-rim-' + uid + ')"/>' +
+        '<circle cx="27" cy="30" r="14.5" fill="url(#gp-body-' + uid + ')"/>' +
+        '<circle cx="27" cy="30" r="9.5" stroke="#64748B" stroke-width="1" stroke-dasharray="3 2" fill="none"/>' +
+        '<circle cx="23" cy="27" r="4" fill="#FDE047" opacity="0.9"/>' +
+        '<circle cx="30" cy="32" r="3" fill="#FB7185" opacity="0.88"/>' +
+        '<path d="M41 37l15 10" stroke="url(#gp-hdl-' + uid + ')" stroke-width="5.5" stroke-linecap="round"/>' +
+        '<path d="M41 37l4 2.7" stroke="#CBD5E1" stroke-width="4" stroke-linecap="round"/>',
+      suitcase: '<defs>' +
+        '<linearGradient id="gs-shell-' + uid + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#60A5FA"/><stop offset="50%" stop-color="#2563EB"/><stop offset="100%" stop-color="#1E3A8A"/></linearGradient>' +
+        '<linearGradient id="gs-frame-' + uid + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F1F5F9"/><stop offset="100%" stop-color="#94A3B8"/></linearGradient>' +
+        '</defs>' +
+        '<ellipse cx="32" cy="56" rx="16" ry="3" fill="rgba(15,23,42,0.14)"/>' +
+        '<path d="M25 18v-7a2.5 2.5 0 0 1 2.5-2.5h9A2.5 2.5 0 0 1 39 11v7" stroke="#475569" stroke-width="2.8" fill="none"/>' +
+        '<rect x="16" y="17" width="32" height="36" rx="6" fill="url(#gs-frame-' + uid + ')"/>' +
+        '<rect x="18" y="19" width="28" height="32" rx="4.5" fill="url(#gs-shell-' + uid + ')"/>' +
+        '<rect x="22" y="23" width="4" height="24" rx="2" fill="#93C5FD" opacity="0.5"/>' +
+        '<rect x="30" y="23" width="4" height="24" rx="2" fill="#93C5FD" opacity="0.35"/>' +
+        '<rect x="38" y="23" width="4" height="24" rx="2" fill="#1E40AF" opacity="0.45"/>' +
+        '<rect x="44" y="28" width="3" height="8" rx="1" fill="#FDE68A"/>' +
+        '<circle cx="22" cy="54" r="3" fill="#1E293B"/><circle cx="42" cy="54" r="3" fill="#1E293B"/>',
+      thermos: '<defs>' +
+        '<linearGradient id="gth-body-' + uid + '" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#334155"/><stop offset="35%" stop-color="#64748B"/><stop offset="100%" stop-color="#0F172A"/></linearGradient>' +
+        '<linearGradient id="gth-cap-' + uid + '" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#FDE68A"/><stop offset="100%" stop-color="#D97706"/></linearGradient>' +
+        '</defs>' +
+        '<ellipse cx="32" cy="54" rx="12" ry="3" fill="rgba(15,23,42,0.14)"/>' +
+        '<rect x="22" y="17" width="20" height="36" rx="6" fill="url(#gth-body-' + uid + ')"/>' +
+        '<rect x="25" y="20" width="3.5" height="29" rx="1.8" fill="#FFFFFF" opacity="0.28"/>' +
+        '<rect x="24" y="10" width="16" height="7" rx="2.5" fill="url(#gth-cap-' + uid + ')"/>' +
+        '<rect x="22" y="23" width="20" height="2.5" fill="#FDE68A" opacity="0.85"/>',
+      card: '<defs>' +
+        '<linearGradient id="gc-bg-' + uid + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FB7185"/><stop offset="50%" stop-color="#DC2626"/><stop offset="100%" stop-color="#881337"/></linearGradient>' +
+        '<linearGradient id="gc-gold-' + uid + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FEF08A"/><stop offset="100%" stop-color="#D97706"/></linearGradient>' +
+        '</defs>' +
+        '<rect x="11" y="20" width="44" height="28" rx="6" fill="rgba(136,19,55,0.18)"/>' +
+        '<rect x="9" y="17" width="44" height="28" rx="6" fill="url(#gc-bg-' + uid + ')"/>' +
+        '<rect x="9" y="26" width="44" height="6" fill="url(#gc-gold-' + uid + ')" opacity="0.92"/>' +
+        '<rect x="28" y="17" width="6" height="28" fill="url(#gc-gold-' + uid + ')" opacity="0.92"/>' +
+        '<circle cx="31" cy="29" r="4.5" fill="#FEF08A" stroke="#B45309" stroke-width="1.5"/>' +
+        '<rect x="14" y="35" width="10" height="5" rx="1.5" fill="#FEF08A" opacity="0.85"/>',
+      dryer: '<defs>' +
+        '<linearGradient id="gd-head-' + uid + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#A5B4FC"/><stop offset="55%" stop-color="#4F46E5"/><stop offset="100%" stop-color="#312E81"/></linearGradient>' +
+        '<linearGradient id="gd-ring-' + uid + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FDBA74"/><stop offset="100%" stop-color="#EA580C"/></linearGradient>' +
+        '</defs>' +
+        '<ellipse cx="30" cy="54" rx="13" ry="3" fill="rgba(49,46,129,0.14)"/>' +
+        '<rect x="26" y="30" width="8.5" height="22" rx="4" fill="url(#gd-head-' + uid + ')"/>' +
+        '<path d="M16 19h26a7.5 7.5 0 0 1 0 15H16l-5-7.5L16 19z" fill="url(#gd-head-' + uid + ')"/>' +
+        '<rect x="40" y="19" width="4" height="15" rx="2" fill="url(#gd-ring-' + uid + ')"/>' +
+        '<ellipse cx="26" cy="23" rx="8" ry="2.2" fill="#FFFFFF" opacity="0.32"/>' +
+        '<circle cx="20" cy="26.5" r="3" fill="#1E1B4B"/>',
+    };
+    return '<svg width="' + s + '" height="' + s + '" viewBox="0 0 64 64" fill="none">' + (map[illustration] || map.tea) + '</svg>';
+  }
+
+  var state = {
+    section: 'preview',
+    perspective: 'customer',
+    uiThemeId: (bundle.uiThemes && bundle.uiThemes[0] && bundle.uiThemes[0].id) || 'obsidian',
+    currencyKey: bundle.meta.currencyPresets[0].key,
+    customShopName: '',
+    customUnitName: '',
+    painGainMode: 'pain',
+    tickerIndex: 0,
+    customerTab: 'home',
+    selectedCategory: '全部',
+    selectedCostFilter: 'all',
+    teaBookmark: '全部雅礼',
+    glacierRange: 'all',
+    wishlistIds: clone(bundle.previewData.customerScreens.initialWishlist || []),
+    applies: clone(bundle.previewData.customerScreens.initialApplies || []),
+    gifts: clone(bundle.previewData.customerScreens.gifts || []),
+    ownerTab: 'applies',
+    ownerShowAddGift: false,
+    ownerApplyFilter: 'all',
+    shopSyncedNotice: false,
+    customers: clone(bundle.previewData.ownerScreens.customers || []),
+    logs: clone(bundle.previewData.ownerScreens.initialLogs || []),
+    shopSettings: clone(bundle.previewData.ownerScreens.shopSettings),
+    applyFormGiftId: (bundle.previewData.customerScreens.gifts[0] && bundle.previewData.customerScreens.gifts[0].id) || '',
+    applyFormReceiver: '示例周女士',
+    applyFormPhone: '13800001099',
+    applyFormAddress: '示例市新区样板路66号',
+    selectedModules: [],
+    customWishText: '',
+    pickedFeatures: [],
+    auditOpenId: (bundle.auditTutorial.steps[0] && bundle.auditTutorial.steps[0].id) || 'audit-1',
+    auditCompleted: loadCompletedSteps(),
+  };
+
+  function loadCompletedSteps() {
+    try {
+      var raw = window.localStorage.getItem(STORAGE_KEY);
+      var parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveCompletedSteps() {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state.auditCompleted));
+    } catch (e) {
+      // ignore storage errors
+    }
+  }
+
+  function currentPreset() {
+    var list = bundle.meta.currencyPresets || [];
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].key === state.currencyKey) return list[i];
+    }
+    return list[0] || { key: 'jifen', label: '积分', shopName: '甄选好礼馆', unitSuffix: '积分' };
+  }
+
+  function unit() {
+    return state.customUnitName.trim() || currentPreset().unitSuffix || '积分';
+  }
+
+  function activeShopName() {
+    return state.customShopName.trim() || state.shopSettings.shopName || currentPreset().shopName || '甄选好礼馆';
+  }
+
+  function formatTerms(text) {
+    var u = unit();
+    return String(text == null ? '' : text)
+      .replace(/币值/g, u)
+      .replace(/积分/g, u);
+  }
+
+  var toastTimer = null;
+  function showToast(msg) {
+    var el = document.getElementById('toast');
+    if (!el) return;
+    el.textContent = msg;
+    el.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      el.hidden = true;
+    }, 2400);
+  }
+
+  function copyText(text, okMsg) {
+    var val = String(text || '');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(val).then(function () {
+        showToast(okMsg || '已复制');
+      }).catch(function () {
+        fallbackCopy(val, okMsg);
+      });
+    } else {
+      fallbackCopy(val, okMsg);
+    }
+  }
+
+  function fallbackCopy(val, okMsg) {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = val;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast(okMsg || '已复制');
+    } catch (e) {
+      showToast('请长按复制：' + val);
+    }
+  }
+
+  function currentCustomer() {
+    return state.customers[0] || { code: '8801', nickname: '示例张先生', balance: 120 };
+  }
+
+  function findGift(id) {
+    for (var i = 0; i < state.gifts.length; i++) {
+      if (state.gifts[i].id === id) return state.gifts[i];
+    }
+    return null;
+  }
+
+  /* ── 导航与全局交互 ── */
+  function bindGlobalNav() {
+    var shareIconEl = document.getElementById('ic-share-hero');
+    if (shareIconEl) shareIconEl.innerHTML = svgIcon('share', 16);
+
+    document.querySelectorAll('.dock-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        switchSection(btn.getAttribute('data-section'));
+      });
+    });
+
+    document.querySelectorAll('.seg-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        state.perspective = btn.getAttribute('data-perspective');
+        closePhoneModal();
+        renderAll();
+      });
+    });
+
+    var resetBtn = document.getElementById('audit-reset-btn');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', function () {
+        state.auditCompleted = [];
+        state.auditOpenId = (bundle.auditTutorial.steps[0] && bundle.auditTutorial.steps[0].id) || 'audit-1';
+        saveCompletedSteps();
+        renderAuditTutorial();
+        showToast('已重置进度');
+      });
+    }
+
+    ['open-poster-btn', 'open-poster-btn-2'].forEach(function (id) {
+      var btn = document.getElementById(id);
+      if (btn) btn.addEventListener('click', openPosterModal);
+    });
+    var customWallBtn = document.getElementById('open-custom-wall-btn');
+    if (customWallBtn) customWallBtn.addEventListener('click', openCustomModal);
+
+    var closePosterBtn = document.getElementById('close-poster-btn');
+    if (closePosterBtn) closePosterBtn.addEventListener('click', closePosterModal);
+    var posterMask = document.getElementById('poster-modal-mask');
+    if (posterMask) {
+      posterMask.addEventListener('click', function (e) {
+        if (e.target === posterMask) closePosterModal();
+      });
+    }
+
+    var shopInput = document.getElementById('custom-shop-input');
+    var unitInput = document.getElementById('custom-unit-input');
+    if (shopInput) {
+      shopInput.addEventListener('input', function () {
+        state.customShopName = shopInput.value;
+        renderThemePicker();
+        renderPhone();
+      });
+    }
+    if (unitInput) {
+      unitInput.addEventListener('input', function () {
+        state.customUnitName = unitInput.value;
+        renderThemePicker();
+        renderCurrencyPills();
+        renderPhone();
+        renderBackendTutorial();
+      });
+    }
+  }
+
+  function switchSection(section) {
+    state.section = section;
+    document.querySelectorAll('.dock-btn').forEach(function (btn) {
+      btn.classList.toggle('is-active', btn.getAttribute('data-section') === section);
+    });
+    ['preview', 'audit', 'backend'].forEach(function (key) {
+      var panel = document.getElementById('panel-' + key);
+      if (!panel) return;
+      var active = key === section;
+      panel.hidden = !active;
+      panel.classList.toggle('is-active', active);
+    });
+  }
+
+  /* ── 首屏：深色头卡 + 三栏合作明白卡 ── */
+  function renderHero() {
+    var md = bundle.marketingData || {};
+    var sloganEl = document.getElementById('hero-slogan');
+    var subEl = document.getElementById('hero-subslogan');
+    if (sloganEl && md.heroSlogan) sloganEl.textContent = md.heroSlogan;
+    if (subEl && md.subSlogan) subEl.textContent = md.subSlogan;
+
+    var trioEl = document.getElementById('hero-value-trio');
+    var vt = bundle.valueTrio || {};
+    if (trioEl) {
+      var cols = [vt.whatYouGet, vt.whatYouPay, vt.whatToDo].filter(Boolean);
+      trioEl.innerHTML = cols.map(function (c) {
+        return '<div class="clarity-col">' +
+          '<div class="clarity-col__head">' +
+            '<span class="clarity-col__num">' + esc(c.num) + '</span>' +
+            svgIcon(c.iconKey, 16) +
+          '</div>' +
+          '<span class="clarity-col__title">' + esc(c.title) + '</span>' +
+          '<span class="clarity-col__line">' + esc(c.headline) + '</span>' +
+          '<span class="clarity-col__desc">' + esc(c.summary) + '</span>' +
+        '</div>';
+      }).join('');
+    }
+  }
+
+  /* ── 首屏痛点暴击：过去手工管店 vs 换上这套小程序 ── */
+  function renderPainVsGain() {
+    var box = document.getElementById('pain-vs-gain');
+    var pg = bundle.painVsGain;
+    if (!box || !pg) return;
+    var isPain = state.painGainMode === 'pain';
+    box.innerHTML =
+      '<div class="pain-gain-card__head">' +
+        '<h2 class="pain-gain-card__title">' + esc(pg.title) + '</h2>' +
+        '<span class="pain-gain-card__sub">' + esc(pg.subtitle) + '</span>' +
+      '</div>' +
+      '<div class="pain-gain-tabs">' +
+        '<button type="button" class="pain-gain-tab ' + (isPain ? 'is-pain' : '') + '" data-pg-mode="pain">过去手工管店（太累）</button>' +
+        '<button type="button" class="pain-gain-tab ' + (!isPain ? 'is-gain' : '') + '" data-pg-mode="gain">换上小程序后（躺赢）</button>' +
+      '</div>' +
+      '<div class="pain-gain-rows">' +
+        (pg.rows || []).map(function (r) {
+          return '<div class="pain-gain-row ' + (isPain ? 'pain-gain-row--pain' : 'pain-gain-row--gain') + '">' +
+            '<span class="pain-gain-num">' + esc(r.num) + '</span>' +
+            '<span>' + esc(isPain ? r.pain : r.gain) + '</span>' +
+          '</div>';
+        }).join('') +
+      '</div>';
+
+    box.querySelectorAll('[data-pg-mode]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        state.painGainMode = btn.getAttribute('data-pg-mode');
+        renderPainVsGain();
+      });
+    });
+  }
+
+  /* ── 模拟器下方：苹果官网式定制功能互动选配台 ── */
+  function renderConfigurator() {
+    var box = document.getElementById('custom-configurator');
+    var cfg = bundle.customConfigurator;
+    if (!box || !cfg) return;
+    var mods = cfg.optionalModules || [];
+    var pickedMods = mods.filter(function (m) { return state.selectedModules.indexOf(m.id) >= 0; });
+    var cur = currentUiTheme();
+
+    box.innerHTML =
+      '<h2 class="configurator-card__title">' + esc(cfg.title) + '</h2>' +
+      '<p class="configurator-card__sub">' + esc(cfg.subtitle) + '</p>' +
+      '<div class="config-base-row">' +
+        (cfg.baseIncluded || []).map(function (b) {
+          return '<span class="config-base-chip">标配：' + esc(b) + '</span>';
+        }).join('') +
+      '</div>' +
+      '<div class="config-mod-grid">' +
+        mods.map(function (m) {
+          var sel = state.selectedModules.indexOf(m.id) >= 0;
+          return '<button type="button" class="config-mod-tile ' + (sel ? 'is-selected' : '') + '" data-cfg-mod="' + esc(m.id) + '">' +
+            '<span class="config-mod-tile__scene">' + (sel ? '已选 · ' : '') + esc(m.scene) + '</span>' +
+            '<span class="config-mod-tile__title">' + esc(m.title) + '</span>' +
+            '<span class="config-mod-tile__benefit">' + esc(m.benefit) + '</span>' +
+          '</button>';
+        }).join('') +
+      '</div>' +
+      '<div class="config-wish-box">' +
+        '<input type="text" class="custom-brand-input" id="custom-wish-input" value="' + esc(state.customWishText) + '" placeholder="' + esc(cfg.wishPlaceholder || '') + '" aria-label="自由定制心愿">' +
+      '</div>' +
+      '<div class="config-summary-bar">' +
+        '<div style="font-size:15px;font-weight:700;">已配方案：版本' + esc(cur.code) + '（' + esc(cur.name) + '）· 店名「' + esc(activeShopName()) + '」· ' + pickedMods.length + ' 项扩展功能</div>' +
+        '<button type="button" class="m-btn m-btn--emerald m-btn--block" id="copy-wishlist-config-btn">' + svgIcon('copy', 16) + '一键复制《我的定制心愿单》发给开发者</button>' +
+      '</div>';
+
+    box.querySelectorAll('[data-cfg-mod]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var id = btn.getAttribute('data-cfg-mod');
+        var idx = state.selectedModules.indexOf(id);
+        if (idx >= 0) state.selectedModules.splice(idx, 1);
+        else state.selectedModules.push(id);
+        renderConfigurator();
+      });
+    });
+
+    var wishEl = document.getElementById('custom-wish-input');
+    if (wishEl) {
+      wishEl.addEventListener('input', function () {
+        state.customWishText = wishEl.value;
+      });
+    }
+
+    var copyCfgBtn = document.getElementById('copy-wishlist-config-btn');
+    if (copyCfgBtn) {
+      copyCfgBtn.addEventListener('click', function () {
+        var modNames = pickedMods.map(function (m) { return m.title; }).join('、') || '仅标配基础版';
+        var wish = state.customWishText.trim();
+        var text = '【我的定制心愿单】风格：版本' + cur.code + '（' + cur.name + '）｜店名：' + activeShopName() +
+          '｜积分叫：' + unit() + '｜定制模块：' + modNames +
+          (wish ? '｜补充想法：' + wish : '') + '（随时改到满意为止，不满意不要钱）';
+        copyText(text, '已复制《我的定制心愿单》，可直接发微信');
+      });
+    }
+  }
+
+  function currentUiTheme() {
+    var themes = bundle.uiThemes || [];
+    for (var i = 0; i < themes.length; i++) {
+      if (themes[i].id === state.uiThemeId) return themes[i];
+    }
+    return themes[0] || { id: 'obsidian', code: 'A', name: '曜石黑金', layoutMode: 'gallery', copyTemplate: '' };
+  }
+
+  function renderThemePicker() {
+    var themes = bundle.uiThemes || [];
+    var cur = currentUiTheme();
+    var hero = document.querySelector('.studio-hero');
+    var frame = document.getElementById('phone-frame');
+    if (hero) hero.setAttribute('data-ui-theme', cur.id);
+    if (frame) {
+      frame.setAttribute('data-ui-theme', cur.id);
+      frame.setAttribute('data-layout-mode', cur.layoutMode);
+    }
+
+    var grid = document.getElementById('theme-grid');
+    if (grid) {
+      grid.innerHTML = themes.map(function (t) {
+        var active = t.id === cur.id ? 'is-active' : '';
+        var dots = (t.swatches || []).map(function (hex) {
+          return '<span class="theme-dot" style="background:' + esc(hex) + '"></span>';
+        }).join('');
+        return '<button type="button" class="theme-tile ' + active + '" data-theme-id="' + esc(t.id) + '" role="radio" aria-checked="' + (t.id === cur.id) + '">' +
+          '<div class="theme-tile__top">' +
+            '<span class="theme-tile__code">版本' + esc(t.code) + ' · ' + esc(t.name) + '</span>' +
+            '<span class="theme-swatches">' + dots + '</span>' +
+          '</div>' +
+          '<span class="theme-tile__sub">' + esc(t.subtitle) + '</span>' +
+          '<span class="theme-tile__for">' + esc(t.industryTag || t.bestFor) + ' · 推荐店名「' + esc(t.recommendedShopName || '') + '」</span>' +
+        '</button>';
+      }).join('');
+      grid.querySelectorAll('[data-theme-id]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          state.uiThemeId = btn.getAttribute('data-theme-id');
+          var chosen = currentUiTheme();
+          if (!state.customShopName.trim() && chosen.recommendedShopName) {
+            state.shopSettings.shopName = chosen.recommendedShopName;
+          }
+          renderAll();
+          showToast('已切换「版本' + chosen.code + '：' + chosen.name + '」' + (chosen.recommendedShopName ? '（' + chosen.recommendedShopName + '）' : ''));
+        });
+      });
+    }
+
+    var copyBtn = document.getElementById('copy-theme-btn');
+    if (copyBtn) {
+      copyBtn.textContent = '已选中：版本' + cur.code + ' · ' + cur.name + ' · 一键复制我喜欢的方案';
+      copyBtn.onclick = function () {
+        var msg = String(cur.copyTemplate || '')
+          .replace(/\{shopName\}/g, activeShopName())
+          .replace(/\{currency\}/g, unit());
+        copyText(msg, '已复制：版本' + cur.code + '（' + cur.name + '）定制方案');
+      };
+    }
+  }
+
+  function renderCurrencyPills() {
+    var box = document.getElementById('currency-pills');
+    if (!box) return;
+    var presets = bundle.meta.currencyPresets || [];
+    var hasCustomUnit = !!state.customUnitName.trim();
+    box.innerHTML = presets.map(function (p) {
+      var active = !hasCustomUnit && p.key === state.currencyKey ? 'is-active' : '';
+      return '<button type="button" class="currency-pill ' + active + '" data-currency="' + esc(p.key) + '">' + esc(p.label) + '</button>';
+    }).join('');
+    box.querySelectorAll('.currency-pill').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        state.currencyKey = btn.getAttribute('data-currency');
+        state.customShopName = '';
+        state.customUnitName = '';
+        var shopInput = document.getElementById('custom-shop-input');
+        var unitInput = document.getElementById('custom-unit-input');
+        if (shopInput) shopInput.value = '';
+        if (unitInput) unitInput.value = '';
+        state.shopSettings.shopName = currentPreset().shopName;
+        renderAll();
+        showToast('已切换称呼为「' + unit() + '」');
+      });
+    });
+  }
+
+  function openPhoneModal(html) {
+    var mask = document.getElementById('phone-modal-mask');
+    var sheet = document.getElementById('phone-modal-sheet');
+    if (!mask || !sheet) return;
+    sheet.innerHTML = html;
+    mask.hidden = false;
+    mask.onclick = function (e) {
+      if (e.target === mask) closePhoneModal();
+    };
+    var closeBtn = sheet.querySelector('[data-close-modal]');
+    if (closeBtn) closeBtn.addEventListener('click', closePhoneModal);
+  }
+
+  function closePhoneModal() {
+    var mask = document.getElementById('phone-modal-mask');
+    if (mask) mask.hidden = true;
+  }
+
+  /* ── 01 实机预览 ── */
+  function renderPhone() {
+    var preset = currentPreset();
+    var isOwner = state.perspective === 'owner';
+
+    document.querySelectorAll('.seg-btn').forEach(function (btn) {
+      btn.classList.toggle('is-active', btn.getAttribute('data-perspective') === state.perspective);
+    });
+
+    var brandMark = document.getElementById('wx-brand-mark');
+    var navTitle = document.getElementById('wx-nav-title');
+    var sName = activeShopName();
+    if (brandMark) brandMark.textContent = (sName || '礼').slice(0, 1);
+    if (navTitle) navTitle.textContent = isOwner ? '店主后台 · ' + sName : sName;
+
+    var strip = document.getElementById('phone-mode-strip');
+    if (strip) {
+      strip.classList.toggle('is-owner', isOwner);
+      strip.innerHTML = isOwner
+        ? '<span>店主手机后台</span><span>四项核心操作</span>'
+        : '<span>顾客选礼前台</span><span>称呼：' + esc(unit()) + '</span>';
+    }
+
+    var ownerNavBar = document.getElementById('owner-nav-bar');
+    var tabbar = document.getElementById('wx-tabbar');
+    if (ownerNavBar) ownerNavBar.hidden = !isOwner;
+    if (tabbar) tabbar.hidden = isOwner;
+
+    if (isOwner) {
+      renderOwnerNavBar();
+      renderOwnerScreen();
+    } else {
+      renderCustomerTabBar();
+      renderCustomerScreen();
+    }
+  }
+
+  function renderCustomerTabBar() {
+    var tabbar = document.getElementById('wx-tabbar');
+    if (!tabbar) return;
+    var themeId = currentUiTheme().id;
+    tabbar.className = 'wx-tabbar wx-tabbar--' + themeId;
+    var tabs = [
+      { key: 'home', ic: 'home', label: '首页' },
+      { key: 'category', ic: 'grid', label: '全部分类' },
+      { key: 'wishlist', ic: 'star', label: '礼栈', badge: state.wishlistIds.length },
+      { key: 'applies', ic: 'truck', label: '进度' },
+    ];
+    tabbar.innerHTML = tabs.map(function (t) {
+      var active = t.key === state.customerTab ? 'is-active' : '';
+      var badgeHtml = t.badge ? '<span class="wx-tabbar__badge">' + t.badge + '</span>' : '';
+      return '<button type="button" class="wx-tabbar__item ' + active + '" data-ctab="' + t.key + '">' +
+        badgeHtml +
+        svgIcon(t.ic, 18) +
+        '<span>' + esc(t.label) + '</span>' +
+      '</button>';
+    }).join('');
+    tabbar.querySelectorAll('[data-ctab]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        state.customerTab = btn.getAttribute('data-ctab');
+        renderPhone();
+      });
+    });
+  }
+
+  function openRulesSheet() {
+    var cs = bundle.previewData.customerScreens;
+    var entries = cs.guideEntries || [];
+    openPhoneModal(
+      '<div class="m-card__head"><p class="m-card__title">活动规则与常见疑问</p><button type="button" class="text-btn" data-close-modal>关闭</button></div>' +
+      entries.map(function (item) {
+        return '<div class="m-list-item" style="margin-bottom:8px;">' +
+          '<strong style="font-size:16px;">' + esc(formatTerms(item.title)) + '</strong>' +
+          (item.lines || []).map(function (ln) { return '<div class="m-card__meta" style="margin-top:4px;">' + esc(formatTerms(ln)) + '</div>'; }).join('') +
+        '</div>';
+      }).join('')
+    );
+  }
+
+  function liveTickerHtml() {
+    var tickers = (bundle.previewData.customerScreens.liveTickers) || [];
+    if (!tickers.length) return '';
+    var text = tickers[state.tickerIndex % tickers.length];
+    return '<div class="live-ticker-bar" id="live-ticker-bar"><span class="live-ticker-dot"></span><span>' + esc(text) + '</span></div>';
+  }
+
+  function openGiftDetailSheet(giftId) {
+    var g = findGift(giftId);
+    if (!g) return;
+    var u = unit();
+    var cust = currentCustomer();
+    var specs = (g.specs && g.specs.length) ? g.specs : ['标准礼盒装'];
+    var activeSpec = specs[0];
+    var tags = (g.tags && g.tags.length) ? g.tags : ['顺丰包邮', '专柜正品'];
+
+    openPhoneModal(
+      '<div class="m-card__head"><p class="m-card__title">商品详情</p><button type="button" class="text-btn" data-close-modal>关闭</button></div>' +
+      '<div class="detail-hero-box" style="background:' + esc(g.tint || '#ECFDF5') + '">' + giftSvg(g.illustration, g.accent, 96) + '</div>' +
+      '<strong style="font-size:19px;color:var(--ink);">' + esc(g.name) + '</strong>' +
+      '<div class="detail-price-row">' +
+        '<span class="detail-cost-big">' + g.cost + ' ' + esc(u) + '</span>' +
+        (g.marketPrice ? '<span class="market-price-del">市场价 ' + esc(g.marketPrice) + '</span>' : '') +
+        '<span class="stock-hot-tag">仅剩 ' + (g.stockLeft || 6) + ' 件</span>' +
+      '</div>' +
+      '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">' +
+        tags.map(function (t) { return '<span class="config-base-chip">' + esc(t) + '</span>'; }).join('') +
+      '</div>' +
+      '<div class="m-form-label">选择规格</div>' +
+      '<div class="spec-pills" id="detail-spec-pills">' +
+        specs.map(function (sp, idx) {
+          return '<button type="button" class="spec-pill ' + (idx === 0 ? 'is-active' : '') + '" data-spec-val="' + esc(sp) + '">' + esc(sp) + '</button>';
+        }).join('') +
+      '</div>' +
+      '<p style="margin:0 0 12px;font-size:15px;color:var(--ink-2);">' + esc(g.detailSummary || g.desc) + '</p>' +
+      '<button type="button" class="m-btn m-btn--emerald m-btn--block" id="detail-redeem-now">立即用 ' + g.cost + ' ' + esc(u) + ' 兑换（余 ' + cust.balance + '）</button>'
+    );
+
+    var sheet = document.getElementById('phone-modal-sheet');
+    if (sheet) {
+      sheet.querySelectorAll('[data-spec-val]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          activeSpec = btn.getAttribute('data-spec-val');
+          sheet.querySelectorAll('[data-spec-val]').forEach(function (b) {
+            b.classList.toggle('is-active', b === btn);
+          });
+        });
+      });
+    }
+    var redeemBtn = document.getElementById('detail-redeem-now');
+    if (redeemBtn) {
+      redeemBtn.addEventListener('click', function () {
+        if (cust.balance < g.cost) {
+          showToast('当前演示余额不足，可切到店主后台给客户充值');
+          return;
+        }
+        cust.balance -= g.cost;
+        state.applies.unshift({
+          id: 'ord-demo-' + (103 + state.applies.length),
+          giftId: g.id,
+          giftName: g.name + '（' + activeSpec + '）',
+          cost: g.cost,
+          status: 'pending',
+          statusLabel: '待发货',
+          isNew: true,
+          receiver: state.applyFormReceiver,
+          phone: state.applyFormPhone,
+          address: state.applyFormAddress,
+          expressCompany: '',
+          trackingNo: '',
+          createdAt: '刚刚',
+        });
+        state.logs.unshift({
+          id: 'log-' + Date.now(),
+          customerCode: cust.code,
+          customerName: cust.nickname,
+          delta: -g.cost,
+          balanceAfter: cust.balance,
+          reason: '兑换 ' + g.name,
+          time: '刚刚',
+        });
+        closePhoneModal();
+        renderPhone();
+        showToast('兑换成功！切到「店主手机后台 → 发货」可立即看到这笔新订单');
+      });
+    }
+  }
+
+  /* ── 版本 A：曜石黑金（尊享黑卡 + 2x2 专柜画廊） ── */
+  function renderCustomerHomeObsidian(screen, cs, cust, u) {
+    var cats = ['全部', '茶具礼盒', '厨房电器', '出行箱包', '个护好物'];
+    var list = state.gifts.filter(function (g) {
+      return state.selectedCategory === '全部' || g.category === state.selectedCategory;
+    }).slice(0, 4);
+
+    screen.innerHTML =
+      liveTickerHtml() +
+      '<div class="obs-vip-card">' +
+        '<div class="obs-vip-card__top">' +
+          '<div><div style="font-size:14px;color:#CBD5E1;">' + esc(state.shopSettings.welcomeTitle) + '</div><div class="obs-vip-card__num">' + cust.balance + ' ' + esc(u) + '</div></div>' +
+          '<div class="obs-vip-card__acts">' +
+            '<button type="button" class="obs-pill-btn" id="obs-rules-btn">规则说明</button>' +
+            '<button type="button" class="obs-pill-btn" id="obs-wx-btn">联系顾问</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="obs-vip-card__foot">臻选正品 · 达标即兑 · 顺丰直发</div>' +
+      '</div>' +
+      '<div class="obs-cat-rail">' +
+        cats.map(function (cat) {
+          var lbl = cat === '全部' ? '全部臻品' : cat;
+          return '<button type="button" class="obs-cat-pill ' + (state.selectedCategory === cat ? 'is-active' : '') + '" data-obs-cat="' + esc(cat) + '">' + esc(lbl) + '</button>';
+        }).join('') +
+      '</div>' +
+      '<div class="obs-gallery-grid">' +
+        list.map(function (g) {
+          return '<div class="obs-gift-card">' +
+            '<div class="obs-gift-stage" data-open-detail="' + esc(g.id) + '" style="cursor:pointer;">' +
+              '<span class="obs-gift-badge">' + g.cost + ' ' + esc(u) + '</span>' +
+              giftSvg(g.illustration, '#FDE68A', 62) +
+            '</div>' +
+            '<div class="obs-gift-body">' +
+              '<div class="obs-gift-name" data-open-detail="' + esc(g.id) + '" style="cursor:pointer;">' + esc(g.name) + '</div>' +
+              '<div class="stock-meta-row">' + (g.marketPrice ? '<span class="market-price-del">' + esc(g.marketPrice) + '</span>' : '') + '<span>已兑 ' + (g.soldCount || 88) + '</span></div>' +
+              '<button type="button" class="obs-gold-btn" data-open-detail="' + esc(g.id) + '">看详情兑换</button>' +
+            '</div>' +
+          '</div>';
+        }).join('') +
+      '</div>';
+
+    var rb = document.getElementById('obs-rules-btn');
+    if (rb) rb.addEventListener('click', openRulesSheet);
+    var wb = document.getElementById('obs-wx-btn');
+    if (wb) wb.addEventListener('click', function () { copyText(state.shopSettings.serviceWechat, '已复制顾问微信：' + state.shopSettings.serviceWechat); });
+    screen.querySelectorAll('[data-obs-cat]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        state.selectedCategory = btn.getAttribute('data-obs-cat');
+        renderCustomerHomeObsidian(screen, cs, cust, u);
+      });
+    });
+    bindGiftCardActions(screen);
+  }
+
+  /* ── 版本 B：朱砂喜庆（弧形红金头图 + 金色福袋 + 通栏大横幅抢兑） ── */
+  function renderCustomerHomeCrimson(screen, cs, cust, u) {
+    var pcts = ['86%', '91%', '78%', '84%'];
+    var list = state.gifts.slice(0, 4);
+    screen.innerHTML =
+      liveTickerHtml() +
+      '<div class="cri-curved-hero">' +
+        '<div class="cri-curved-hero__top">' +
+          '<h3 class="cri-curved-hero__title">' + esc(state.shopSettings.welcomeTitle) + '</h3>' +
+          '<button type="button" class="cri-rule-circle" id="cri-rules-btn">规则</button>' +
+        '</div>' +
+        '<div class="cri-steps-row"><span>01 挑好礼</span><span>→</span><span>02 办业务</span><span>→</span><span>03 填地址</span></div>' +
+      '</div>' +
+      '<div class="cri-bag-bar">' +
+        '<span class="cri-bag-bar__val">我的福利账户：' + cust.balance + ' ' + esc(u) + '</span>' +
+        '<button type="button" class="cri-bag-btn" id="cri-wx-btn">找店主核销</button>' +
+      '</div>' +
+      '<div class="cri-banner-list">' +
+        list.map(function (g, idx) {
+          var pct = pcts[idx % pcts.length];
+          return '<div class="cri-banner-card">' +
+            '<span class="cri-banner-tag">仅剩 ' + (g.stockLeft || 5) + ' 件</span>' +
+            '<div class="cri-banner-illus" data-open-detail="' + esc(g.id) + '" style="cursor:pointer;">' + giftSvg(g.illustration, '#DC2626', 62) + '</div>' +
+            '<div class="cri-banner-info">' +
+              '<div class="cri-banner-name" data-open-detail="' + esc(g.id) + '" style="cursor:pointer;">' + esc(g.name) + '</div>' +
+              '<div class="cri-banner-cost">' + g.cost + ' ' + esc(u) + '免费兑' + (g.marketPrice ? '<span class="market-price-del">' + esc(g.marketPrice) + '</span>' : '') + '</div>' +
+              '<div class="cri-prog-wrap"><div class="cri-prog-track"><div class="cri-prog-fill" style="width:' + pct + '"></div></div><span>已兑 ' + pct + '</span></div>' +
+              '<button type="button" class="cri-grab-btn" data-open-detail="' + esc(g.id) + '">立即抢兑</button>' +
+            '</div>' +
+          '</div>';
+        }).join('') +
+      '</div>';
+
+    var rb = document.getElementById('cri-rules-btn');
+    if (rb) rb.addEventListener('click', openRulesSheet);
+    var wb = document.getElementById('cri-wx-btn');
+    if (wb) wb.addEventListener('click', function () { copyText(state.shopSettings.serviceWechat, '已复制店主微信：' + state.shopSettings.serviceWechat); });
+    bindGiftCardActions(screen);
+  }
+
+  /* ── 版本 C：温润茶白（东方杂志 · 书眉顶条 + 左竖书签 + 右画册流） ── */
+  function renderCustomerHomeTea(screen, cs, cust, u) {
+    var bookmarks = [
+      { key: '全部雅礼', label: '全部雅礼' },
+      { key: '茶具礼盒', label: '茶食雅器' },
+      { key: '厨房电器', label: '居家好物' },
+      { key: '出行箱包', label: '旅途随行' },
+      { key: '礼册须知', label: '礼册须知' },
+    ];
+    var cnNums = ['壹', '贰', '叁', '肆'];
+    var sName = activeShopName();
+    var rightHtml = '';
+    if (state.teaBookmark === '礼册须知') {
+      rightHtml = (cs.guideEntries || []).map(function (entry) {
+        return '<div class="tea-gift-card" style="display:block;">' +
+          '<div class="tea-gift-name" style="padding-right:0;">' + esc(formatTerms(entry.title)) + '</div>' +
+          (entry.lines || []).map(function (ln) { return '<div class="tea-gift-note" style="margin-top:4px;">' + esc(formatTerms(ln)) + '</div>'; }).join('') +
+        '</div>';
+      }).join('');
+    } else {
+      var list = state.gifts.filter(function (g) {
+        return state.teaBookmark === '全部雅礼' || g.category === state.teaBookmark;
+      }).slice(0, 3);
+      rightHtml = list.map(function (g, i) {
+        return '<div class="tea-gift-card">' +
+          '<span class="tea-no-tag">编号 ' + (cnNums[i] || (i + 1)) + '</span>' +
+          '<div class="tea-gift-illus" data-open-detail="' + esc(g.id) + '" style="cursor:pointer;">' + giftSvg(g.illustration, '#7C3F1C', 58) + '</div>' +
+          '<div class="tea-gift-info">' +
+            '<div class="tea-gift-name" data-open-detail="' + esc(g.id) + '" style="cursor:pointer;">' + esc(g.name) + '</div>' +
+            '<div class="tea-gift-note">' + g.cost + ' ' + esc(u) + (g.marketPrice ? ' · 原价' + esc(g.marketPrice) : '') + '</div>' +
+            '<button type="button" class="tea-outline-btn" data-open-detail="' + esc(g.id) + '">品鉴兑换</button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    screen.innerHTML =
+      liveTickerHtml() +
+      '<div class="tea-scope">' +
+        '<div class="tea-masthead">' +
+          '<div><span class="tea-seal">甄选</span><strong style="font-size:16px;color:#3E2723;">' + esc(sName) + '</strong></div>' +
+          '<div class="tea-masthead__meta"><span>余韵：' + cust.balance + ' ' + esc(u) + '</span><button type="button" class="text-btn" style="color:#7C3F1C;" id="tea-wx-btn">[顾问]</button></div>' +
+        '</div>' +
+        '<div class="tea-split-body">' +
+          '<div class="tea-bookmarks">' +
+            bookmarks.map(function (b) {
+              return '<button type="button" class="tea-bookmark-btn ' + (state.teaBookmark === b.key ? 'is-active' : '') + '" data-tea-bm="' + esc(b.key) + '">' + esc(b.label) + '</button>';
+            }).join('') +
+          '</div>' +
+          '<div class="tea-stream">' + rightHtml + '</div>' +
+        '</div>' +
+      '</div>';
+
+    var wb = document.getElementById('tea-wx-btn');
+    if (wb) wb.addEventListener('click', function () { copyText(state.shopSettings.serviceWechat, '已复制茶礼顾问微信：' + state.shopSettings.serviceWechat); });
+    screen.querySelectorAll('[data-tea-bm]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        state.teaBookmark = btn.getAttribute('data-tea-bm');
+        renderCustomerHomeTea(screen, cs, cust, u);
+      });
+    });
+    bindGiftCardActions(screen);
+  }
+
+  /* ── 版本 D：冰川科技（Bento 双拼磁贴 + 区间过滤 + 紧凑网格 + 悬浮结算条） ── */
+  function renderCustomerHomeGlacier(screen, cs, cust, u) {
+    var ranges = [
+      { key: 'all', label: '全部' },
+      { key: 'le60', label: '<=60' + u },
+      { key: 'r61_100', label: '61-100' + u },
+      { key: 'gt100', label: '100+' + u },
+    ];
+    var list = state.gifts.filter(function (g) {
+      if (state.glacierRange === 'le60') return g.cost <= 60;
+      if (state.glacierRange === 'r61_100') return g.cost >= 61 && g.cost <= 100;
+      if (state.glacierRange === 'gt100') return g.cost > 100;
+      return true;
+    }).slice(0, 4);
+
+    var wishGifts = state.wishlistIds.map(findGift).filter(Boolean);
+    var totalCost = wishGifts.reduce(function (s, g) { return s + Number(g.cost || 0); }, 0);
+
+    screen.innerHTML =
+      liveTickerHtml() +
+      '<div class="gla-bento-top">' +
+        '<div class="gla-dash-tile">' +
+          '<div style="font-size:14px;opacity:0.88;">' + esc(state.shopSettings.welcomeTitle) + '</div>' +
+          '<div class="gla-dash-num">' + cust.balance + '</div>' +
+          '<div class="gla-dash-id">ID:' + esc(cust.code) + ' · ' + esc(u) + '</div>' +
+        '</div>' +
+        '<div class="gla-side-tiles">' +
+          '<button type="button" class="gla-quick-tile" id="gla-rules-btn">30秒看懂规则 ›</button>' +
+          '<button type="button" class="gla-quick-tile" id="gla-wx-btn">复制客服微信</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="gla-filter-bar">' +
+        ranges.map(function (r) {
+          return '<button type="button" class="gla-filter-pill ' + (state.glacierRange === r.key ? 'is-active' : '') + '" data-gla-range="' + esc(r.key) + '">' + esc(r.label) + '</button>';
+        }).join('') +
+      '</div>' +
+      '<div class="gla-compact-grid">' +
+        (list.length ? list.map(function (g) {
+          return '<div class="gla-gift-card">' +
+            '<div class="gla-gift-illus" data-open-detail="' + esc(g.id) + '" style="cursor:pointer;">' + giftSvg(g.illustration, '#2563EB', 54) + '</div>' +
+            '<div class="gla-gift-name" data-open-detail="' + esc(g.id) + '" style="cursor:pointer;">' + esc(g.name) + '</div>' +
+            '<div class="gla-gift-foot">' +
+              '<span class="gla-gift-cost">' + g.cost + ' ' + esc(u) + (g.marketPrice ? '<span class="market-price-del">' + esc(g.marketPrice) + '</span>' : '') + '</span>' +
+              '<button type="button" class="gla-plus-btn" data-toggle-wish="' + esc(g.id) + '" aria-label="加入礼栈">+</button>' +
+            '</div>' +
+          '</div>';
+        }).join('') : '<div class="m-card" style="grid-column:1/-1;text-align:center;">该区间暂无商品</div>') +
+      '</div>' +
+      '<div class="gla-floating-cart">' +
+        '<span>已选 ' + wishGifts.length + ' 件 · 共 ' + totalCost + ' ' + esc(u) + '</span>' +
+        '<button type="button" class="gla-checkout-btn" id="gla-go-apply">去提交兑换 →</button>' +
+      '</div>';
+
+    var rb = document.getElementById('gla-rules-btn');
+    if (rb) rb.addEventListener('click', openRulesSheet);
+    var wb = document.getElementById('gla-wx-btn');
+    if (wb) wb.addEventListener('click', function () { copyText(state.shopSettings.serviceWechat, '已复制客服微信：' + state.shopSettings.serviceWechat); });
+    var goApply = document.getElementById('gla-go-apply');
+    if (goApply) {
+      goApply.addEventListener('click', function () {
+        state.customerTab = 'wishlist';
+        renderPhone();
+      });
+    }
+    screen.querySelectorAll('[data-gla-range]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        state.glacierRange = btn.getAttribute('data-gla-range');
+        renderCustomerHomeGlacier(screen, cs, cust, u);
+      });
+    });
+    bindGiftCardActions(screen);
+  }
+
+  function renderCustomerScreen() {
+    var screen = document.getElementById('phone-screen');
+    if (!screen) return;
+    var cs = bundle.previewData.customerScreens;
+    var cust = currentCustomer();
+    var u = unit();
+
+    if (state.customerTab === 'home') {
+      var themeId = currentUiTheme().id;
+      if (themeId === 'crimson') return renderCustomerHomeCrimson(screen, cs, cust, u);
+      if (themeId === 'tea') return renderCustomerHomeTea(screen, cs, cust, u);
+      if (themeId === 'glacier') return renderCustomerHomeGlacier(screen, cs, cust, u);
+      return renderCustomerHomeObsidian(screen, cs, cust, u);
+    }
+
+    if (state.customerTab === 'category') {
+      var filtered = state.gifts.filter(function (g) {
+        var catOk = state.selectedCategory === '全部' || g.category === state.selectedCategory;
+        var costOk = true;
+        if (state.selectedCostFilter === 'low') costOk = g.cost <= 30;
+        if (state.selectedCostFilter === 'mid') costOk = g.cost > 30 && g.cost <= 80;
+        if (state.selectedCostFilter === 'high') costOk = g.cost > 80;
+        return catOk && costOk;
+      });
+      screen.innerHTML =
+        '<div class="m-chip-row">' +
+          cs.categories.map(function (cat) {
+            return '<button type="button" class="m-chip ' + (state.selectedCategory === cat ? 'is-active' : '') + '" data-cat="' + esc(cat) + '">' + esc(cat) + '</button>';
+          }).join('') +
+        '</div>' +
+        '<div class="m-chip-row">' +
+          cs.costFilters.map(function (cf) {
+            return '<button type="button" class="m-chip ' + (state.selectedCostFilter === cf.key ? 'is-active' : '') + '" data-cost="' + esc(cf.key) + '">' + esc(cf.label) + '</button>';
+          }).join('') +
+        '</div>' +
+        '<div class="m-gift-grid">' +
+          (filtered.length ? filtered.map(renderCustomerGiftCard).join('') : '<div class="m-card" style="text-align:center;">暂无匹配礼品</div>') +
+        '</div>';
+
+      screen.querySelectorAll('[data-cat]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          state.selectedCategory = btn.getAttribute('data-cat');
+          renderCustomerScreen();
+        });
+      });
+      screen.querySelectorAll('[data-cost]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          state.selectedCostFilter = btn.getAttribute('data-cost');
+          renderCustomerScreen();
+        });
+      });
+      bindGiftCardActions(screen);
+      return;
+    }
+
+    if (state.customerTab === 'wishlist') {
+      var wishGifts = state.wishlistIds.map(findGift).filter(Boolean);
+      var totalCost = wishGifts.reduce(function (sum, g) { return sum + Number(g.cost || 0); }, 0);
+      screen.innerHTML =
+        '<div class="m-card">' +
+          '<p class="m-card__title">我的礼栈（' + wishGifts.length + ' 件）</p>' +
+          '<p class="m-card__meta" style="margin:6px 0 0;">合计需 <strong style="color:var(--gold)">' + totalCost + ' ' + esc(u) + '</strong> · 可用 <strong style="color:var(--emerald)">' + cust.balance + ' ' + esc(u) + '</strong></p>' +
+        '</div>' +
+        '<div class="m-row-list">' +
+          wishGifts.map(function (g) {
+            return '<div class="m-list-item">' +
+              '<div class="m-list-item__top">' +
+                '<div><strong style="font-size:16px;">' + esc(g.name) + '</strong><div class="m-card__meta" style="color:var(--emerald);font-weight:700;">' + g.cost + ' ' + esc(u) + '</div></div>' +
+                '<button type="button" class="m-btn m-btn--sm" data-remove-wish="' + esc(g.id) + '">移除</button>' +
+              '</div>' +
+              '<button type="button" class="m-btn m-btn--emerald m-btn--block" style="margin-top:8px;" data-redeem-gift="' + esc(g.id) + '">立即兑换</button>' +
+            '</div>';
+          }).join('') +
+        '</div>';
+
+      screen.querySelectorAll('[data-remove-wish]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var id = btn.getAttribute('data-remove-wish');
+          state.wishlistIds = state.wishlistIds.filter(function (x) { return x !== id; });
+          renderPhone();
+        });
+      });
+      screen.querySelectorAll('[data-redeem-gift]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          state.applyFormGiftId = btn.getAttribute('data-redeem-gift');
+          state.customerTab = 'applies';
+          renderPhone();
+        });
+      });
+      return;
+    }
+
+    if (state.customerTab === 'applies') {
+      var selectedGift = findGift(state.applyFormGiftId) || state.gifts[0];
+      screen.innerHTML =
+        '<div class="m-card">' +
+          '<div class="m-card__head"><p class="m-card__title">提交兑换</p><span class="m-card__meta">余额 ' + cust.balance + ' ' + esc(u) + '</span></div>' +
+          '<div class="m-form-row"><label class="m-form-label">礼品</label>' +
+            '<select class="m-input" id="c-apply-gift">' +
+              state.gifts.map(function (g) {
+                var sel = selectedGift && g.id === selectedGift.id ? 'selected' : '';
+                return '<option value="' + esc(g.id) + '" ' + sel + '>' + esc(g.name) + '（' + g.cost + ' ' + esc(u) + '）</option>';
+              }).join('') +
+            '</select>' +
+          '</div>' +
+          '<div class="m-form-row"><label class="m-form-label">收件人</label>' +
+            '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">' +
+              '<input class="m-input" id="c-apply-name" value="' + esc(state.applyFormReceiver) + '">' +
+              '<input class="m-input" id="c-apply-phone" value="' + esc(state.applyFormPhone) + '">' +
+            '</div>' +
+          '</div>' +
+          '<div class="m-form-row"><label class="m-form-label">地址</label>' +
+            '<input class="m-input" id="c-apply-addr" value="' + esc(state.applyFormAddress) + '">' +
+          '</div>' +
+          '<button type="button" class="m-btn m-btn--emerald m-btn--block" id="c-submit-apply">确认提交兑换</button>' +
+        '</div>' +
+        '<div class="m-row-list">' +
+          state.applies.map(function (a) {
+            var shipped = a.status === 'shipped';
+            return '<div class="m-list-item">' +
+              '<div class="m-list-item__top">' +
+                '<strong style="font-size:16px;">' + esc(a.giftName) + '</strong>' +
+                '<span class="m-status-tag ' + (shipped ? 'm-status-tag--done' : 'm-status-tag--pending') + '">' + esc(a.statusLabel) + '</span>' +
+              '</div>' +
+              '<div class="m-card__meta" style="margin-top:4px;">' + esc(a.receiver + ' · ' + a.address) + '</div>' +
+              (shipped ? '<div class="m-card__meta" style="color:var(--emerald);font-weight:700;margin-top:4px;">单号：' + esc(a.expressCompany + ' ' + a.trackingNo) + '</div>' : '') +
+            '</div>';
+          }).join('') +
+        '</div>';
+
+      var selEl = document.getElementById('c-apply-gift');
+      if (selEl) selEl.addEventListener('change', function () { state.applyFormGiftId = selEl.value; });
+      var subBtn = document.getElementById('c-submit-apply');
+      if (subBtn) {
+        subBtn.addEventListener('click', function () {
+          var gift = findGift(document.getElementById('c-apply-gift').value);
+          var receiver = document.getElementById('c-apply-name').value.trim();
+          var phone = document.getElementById('c-apply-phone').value.trim();
+          var address = document.getElementById('c-apply-addr').value.trim();
+          if (!gift || !receiver || !phone || !address) {
+            showToast('请填完整收货信息');
+            return;
+          }
+          if (cust.balance < gift.cost) {
+            showToast('余额不足，可切到店主后台加币');
+            return;
+          }
+          cust.balance -= gift.cost;
+          state.applies.unshift({
+            id: 'ord-demo-' + (103 + state.applies.length),
+            giftId: gift.id,
+            giftName: gift.name,
+            cost: gift.cost,
+            status: 'pending',
+            statusLabel: '待发货',
+            receiver: receiver,
+            phone: phone,
+            address: address,
+            expressCompany: '',
+            trackingNo: '',
+            createdAt: '刚刚',
+          });
+          state.logs.unshift({
+            id: 'log-' + Date.now(),
+            customerCode: cust.code,
+            customerName: cust.nickname,
+            delta: -gift.cost,
+            balanceAfter: cust.balance,
+            reason: '兑换' + gift.name,
+            time: '刚刚',
+          });
+          renderPhone();
+          showToast('已提交！切到「店主手机后台 → 待发货」可直接处理');
+        });
+      }
+    }
+  }
+
+  function renderCustomerGiftCard(g) {
+    var wished = state.wishlistIds.indexOf(g.id) >= 0;
+    return '<div class="m-gift-card">' +
+      '<div class="m-gift-card__top">' +
+        '<div class="m-gift-illus" style="background:' + esc(g.tint || '#ECFDF5') + '">' + giftSvg(g.illustration, g.accent) + '</div>' +
+        '<div style="flex:1;">' +
+          '<div class="m-gift-card__name">' + esc(g.name) + '</div>' +
+          '<div class="m-gift-card__sub">' + esc(g.getText || g.desc) + '</div>' +
+          '<span class="m-gift-card__price">' + esc(formatTerms(g.payText || (g.cost + ' ' + unit()))) + '</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="m-gift-card__actions">' +
+        '<button type="button" class="m-btn m-btn--emerald" data-instant-redeem="' + esc(g.id) + '">立即兑换</button>' +
+        '<button type="button" class="m-btn ' + (wished ? 'm-btn--dark' : '') + '" data-toggle-wish="' + esc(g.id) + '">' + (wished ? '已收藏' : '加礼栈') + '</button>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function bindGiftCardActions(container) {
+    container.querySelectorAll('[data-toggle-wish]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var id = btn.getAttribute('data-toggle-wish');
+        var idx = state.wishlistIds.indexOf(id);
+        if (idx >= 0) {
+          state.wishlistIds.splice(idx, 1);
+          showToast('已从礼栈移除');
+        } else {
+          state.wishlistIds.push(id);
+          showToast('已加入礼栈');
+        }
+        renderPhone();
+      });
+    });
+
+    container.querySelectorAll('[data-instant-redeem]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        state.applyFormGiftId = btn.getAttribute('data-instant-redeem');
+        state.customerTab = 'applies';
+        renderPhone();
+      });
+    });
+
+    container.querySelectorAll('[data-open-detail]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        openGiftDetailSheet(el.getAttribute('data-open-detail'));
+      });
+    });
+  }
+
+  function openGuideModal(key) {
+    var list = bundle.previewData.customerScreens.guideEntries || [];
+    var item = null;
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].key === key) { item = list[i]; break; }
+    }
+    if (!item) return;
+    openPhoneModal(
+      '<div class="m-card__head"><p class="m-card__title">' + esc(formatTerms(item.title)) + '</p><button type="button" class="text-btn" data-close-modal>关闭</button></div>' +
+      '<div class="m-list-item" style="margin-bottom:10px;">' +
+        (item.lines || []).map(function (ln) { return '<div style="margin-bottom:6px;font-size:15px;font-weight:600;">' + esc(formatTerms(ln)) + '</div>'; }).join('') +
+      '</div>' +
+      '<p class="m-card__meta" style="margin:0;">店主可在手机后台随时改这里的文案，保存秒生效。</p>'
+    );
+  }
+
+  /* ── 视角 B：店主手机后台 ── */
+  function renderOwnerNavBar() {
+    var bar = document.getElementById('owner-nav-bar');
+    if (!bar) return;
+    var tabs = bundle.previewData.ownerScreens.navTabs || [];
+    bar.innerHTML = tabs.map(function (t) {
+      var active = t.key === state.ownerTab ? 'is-active' : '';
+      return '<button type="button" class="owner-nav__btn ' + active + '" data-otab="' + esc(t.key) + '">' +
+        svgIcon(t.iconKey, 15) +
+        '<span>' + esc(t.label) + '</span>' +
+      '</button>';
+    }).join('');
+    bar.querySelectorAll('[data-otab]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        state.ownerTab = btn.getAttribute('data-otab');
+        renderPhone();
+      });
+    });
+  }
+
+  function ownerConsoleBanner() {
+    var t = currentUiTheme();
+    var titles = {
+      obsidian: '黑金高管台 · ' + activeShopName(),
+      crimson: '红金掌柜台 · ' + activeShopName(),
+      tea: '东方账房册 · ' + activeShopName(),
+      glacier: '蓝白数据看板 · ' + activeShopName(),
+    };
+    return '<div class="owner-console-head owner-console-head--' + esc(t.id) + '">' +
+      '<strong style="font-size:15px;">' + esc(titles[t.id] || activeShopName()) + '</strong>' +
+      '<span style="font-size:14px;opacity:0.88;">版本' + esc(t.code) + '</span>' +
+    '</div>' +
+    '<div class="boss-guide-bar">' +
+      '<div class="boss-guide-bar__title">30 秒当老板爽感体验（点击即试）</div>' +
+      '<div class="boss-guide-pills">' +
+        '<button type="button" class="boss-guide-pill" data-boss-go="applies">1. 3秒复制打单地址</button>' +
+        '<button type="button" class="boss-guide-pill" data-boss-go="shop">2. 改公告秒同步前台</button>' +
+        '<button type="button" class="boss-guide-pill" data-boss-go="customers">3. 给客户充值积分</button>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function bindBossGuide(screen) {
+    screen.querySelectorAll('[data-boss-go]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        state.ownerTab = btn.getAttribute('data-boss-go');
+        renderPhone();
+      });
+    });
+  }
+
+  function renderOwnerScreen() {
+    var screen = document.getElementById('phone-screen');
+    if (!screen) return;
+    var u = unit();
+    var consoleHead = ownerConsoleBanner();
+
+    if (state.ownerTab === 'applies') {
+      var pendingCount = state.applies.filter(function (a) { return a.status === 'pending'; }).length;
+      var visible = state.applies.filter(function (a) {
+        return state.ownerApplyFilter === 'all' || a.status === state.ownerApplyFilter;
+      });
+      screen.innerHTML =
+        consoleHead +
+        '<div class="m-chip-row">' +
+          '<button type="button" class="m-chip ' + (state.ownerApplyFilter === 'all' ? 'is-active' : '') + '" data-af="all">全部 (' + state.applies.length + ')</button>' +
+          '<button type="button" class="m-chip ' + (state.ownerApplyFilter === 'pending' ? 'is-active' : '') + '" data-af="pending">待发货 (' + pendingCount + ')</button>' +
+          '<button type="button" class="m-chip ' + (state.ownerApplyFilter === 'shipped' ? 'is-active' : '') + '" data-af="shipped">已发货</button>' +
+        '</div>' +
+        '<div class="m-row-list">' +
+          visible.map(function (a) {
+            var shipped = a.status === 'shipped';
+            var fullAddr = a.receiver + ' ' + a.phone + ' ' + a.address;
+            return '<div class="m-list-item">' +
+              '<div class="m-list-item__top">' +
+                '<strong style="font-size:17px;">' + esc(a.giftName) + (a.isNew ? '<span class="new-order-badge">新订单</span>' : '') + '</strong>' +
+                '<span class="m-status-tag ' + (shipped ? 'm-status-tag--done' : 'm-status-tag--pending') + '">' + esc(a.statusLabel) + '</span>' +
+              '</div>' +
+              '<div class="m-address-box">' +
+                '<span>' + esc(fullAddr) + '</span>' +
+                '<button type="button" class="m-btn m-btn--dark m-btn--block" data-copy-addr="' + esc(fullAddr) + '">' + svgIcon('copy', 15) + '一键复制地址去下单</button>' +
+              '</div>' +
+              (shipped
+                ? '<div class="m-card__meta" style="color:var(--emerald);font-weight:700;">已发：' + esc(a.expressCompany + ' ' + a.trackingNo) + '</div>'
+                : '<div class="m-inline-edit">' +
+                    '<input class="m-input" id="track-' + esc(a.id) + '" value="DEMO8888">' +
+                    '<button type="button" class="m-btn m-btn--emerald" data-ship-id="' + esc(a.id) + '">发货</button>' +
+                  '</div>'
+              ) +
+            '</div>';
+          }).join('') +
+        '</div>';
+
+      screen.querySelectorAll('[data-af]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          state.ownerApplyFilter = btn.getAttribute('data-af');
+          renderOwnerScreen();
+        });
+      });
+      screen.querySelectorAll('[data-copy-addr]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          copyText(btn.getAttribute('data-copy-addr'), '已复制收货地址');
+        });
+      });
+      screen.querySelectorAll('[data-ship-id]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var id = btn.getAttribute('data-ship-id');
+          var input = document.getElementById('track-' + id);
+          var trackingNo = (input && input.value.trim()) || 'DEMO8888';
+          for (var i = 0; i < state.applies.length; i++) {
+            if (state.applies[i].id === id) {
+              state.applies[i].status = 'shipped';
+              state.applies[i].statusLabel = '已发货';
+              state.applies[i].expressCompany = '示例快递';
+              state.applies[i].trackingNo = trackingNo;
+              break;
+            }
+          }
+          renderOwnerScreen();
+          showToast('已标记发货，顾客端同步更新');
+        });
+      });
+      bindBossGuide(screen);
+      return;
+    }
+
+    if (state.ownerTab === 'shop') {
+      screen.innerHTML =
+        consoleHead +
+        '<div class="m-card">' +
+          '<div class="m-card__head"><p class="m-card__title">手机改文案（保存秒生效）</p><span class="m-status-tag m-status-tag--done">免提审</span></div>' +
+          '<div class="m-form-row"><label class="m-form-label">客服微信号</label><input class="m-input" id="o-shop-wechat" value="' + esc(state.shopSettings.serviceWechat) + '"></div>' +
+          '<div class="m-form-row"><label class="m-form-label">首页欢迎标题</label><input class="m-input" id="o-welcome-title" value="' + esc(state.shopSettings.welcomeTitle) + '"></div>' +
+          '<div class="m-form-row"><label class="m-form-label">首页说明</label><textarea class="m-textarea" id="o-welcome-lines">' + esc(state.shopSettings.welcomeLinesText) + '</textarea></div>' +
+          '<button type="button" class="m-btn m-btn--emerald m-btn--block" id="o-save-shop">保存设置（立即生效）</button>' +
+          (state.shopSyncedNotice ? (
+            '<div class="sync-cta-banner">' +
+              '<span>已实时生效！顾客端已同步为「' + esc(state.shopSettings.welcomeTitle) + '」</span>' +
+              '<button type="button" class="m-btn m-btn--dark m-btn--sm" id="o-jump-customer-front">点我切回顾客前台亲眼看看 →</button>' +
+            '</div>'
+          ) : '') +
+        '</div>' +
+        '<div class="m-card">' +
+          '<div class="m-card__head"><p class="m-card__title">加店员一起管店</p></div>' +
+          '<div class="m-inline-edit" style="margin-top:0;margin-bottom:8px;">' +
+            '<input class="m-input" id="o-admin-code" placeholder="输入4位顾客号如 8801" maxlength="8">' +
+            '<button type="button" class="m-btn m-btn--dark" id="o-add-admin">设为协管</button>' +
+          '</div>' +
+          state.shopSettings.admins.map(function (adm) {
+            return '<div class="m-list-item__top" style="padding:8px 0;border-top:1px solid var(--line);">' +
+              '<span style="font-size:15px;font-weight:700;">' + esc(adm.name) + '（#' + esc(adm.code) + '）</span>' +
+              '<button type="button" class="m-btn m-btn--sm" data-rm-admin="' + esc(adm.code) + '">移除</button>' +
+            '</div>';
+          }).join('') +
+        '</div>';
+
+      var saveShopBtn = document.getElementById('o-save-shop');
+      if (saveShopBtn) {
+        saveShopBtn.addEventListener('click', function () {
+          state.shopSettings.serviceWechat = document.getElementById('o-shop-wechat').value.trim() || 'demo_service';
+          state.shopSettings.welcomeTitle = document.getElementById('o-welcome-title').value.trim() || '欢迎光临';
+          state.shopSettings.welcomeLinesText = document.getElementById('o-welcome-lines').value.trim();
+          state.shopSyncedNotice = true;
+          renderOwnerScreen();
+          showToast('保存成功！顾客端已实时生效');
+        });
+      }
+      var jumpFrontBtn = document.getElementById('o-jump-customer-front');
+      if (jumpFrontBtn) {
+        jumpFrontBtn.addEventListener('click', function () {
+          state.perspective = 'customer';
+          state.customerTab = 'home';
+          renderPhone();
+          showToast('已切回顾客前台，顶部已实时更新为新公告');
+        });
+      }
+      bindBossGuide(screen);
+      var addAdmBtn = document.getElementById('o-add-admin');
+      if (addAdmBtn) {
+        addAdmBtn.addEventListener('click', function () {
+          var code = document.getElementById('o-admin-code').value.trim();
+          if (!/^\d{4}$/.test(code)) {
+            showToast('请输入 4 位数字顾客号');
+            return;
+          }
+          if (!state.shopSettings.admins.some(function (a) { return a.code === code; })) {
+            state.shopSettings.admins.push({ code: code, name: '店员 #' + code });
+          }
+          renderOwnerScreen();
+          showToast('已添加协管员 #' + code);
+        });
+      }
+      screen.querySelectorAll('[data-rm-admin]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var code = btn.getAttribute('data-rm-admin');
+          state.shopSettings.admins = state.shopSettings.admins.filter(function (a) { return a.code !== code; });
+          renderOwnerScreen();
+        });
+      });
+      bindBossGuide(screen);
+      return;
+    }
+
+    if (state.ownerTab === 'gifts') {
+      screen.innerHTML =
+        consoleHead +
+        '<div class="m-card">' +
+          '<div class="m-card__head">' +
+            '<p class="m-card__title">礼品管理（' + state.gifts.length + ' 件）</p>' +
+            '<button type="button" class="m-btn m-btn--dark m-btn--sm" id="o-toggle-add">' + (state.ownerShowAddGift ? '收起' : '+ 新增礼品') + '</button>' +
+          '</div>' +
+        '</div>' +
+        (state.ownerShowAddGift ? (
+          '<div class="m-card" style="border-color:var(--ink);">' +
+            '<div class="m-form-row"><label class="m-form-label">礼品名称</label><input class="m-input" id="o-new-name" placeholder="如：便携烧水壶"></div>' +
+            '<div class="m-form-row"><label class="m-form-label">所需' + esc(u) + '</label><input class="m-input" id="o-new-cost" type="number" value="35"></div>' +
+            '<button type="button" class="m-btn m-btn--emerald m-btn--block" id="o-save-new-gift">保存上架</button>' +
+          '</div>'
+        ) : '') +
+        '<div class="m-row-list">' +
+          state.gifts.map(function (g) {
+            return '<div class="m-list-item">' +
+              '<div class="m-list-item__top">' +
+                '<strong style="font-size:16px;">' + esc(g.name) + '</strong>' +
+                '<button type="button" class="m-btn m-btn--sm ' + (g.hot ? 'm-btn--dark' : '') + '" data-toggle-hot="' + esc(g.id) + '">' + (g.hot ? '已热门' : '设热门') + '</button>' +
+              '</div>' +
+              '<div class="m-inline-edit">' +
+                '<button type="button" class="m-btn m-btn--sm" data-cost-step="-5" data-gid="' + esc(g.id) + '">-5</button>' +
+                '<strong style="font-size:16px;min-width:74px;text-align:center;color:var(--emerald);">' + g.cost + ' ' + esc(u) + '</strong>' +
+                '<button type="button" class="m-btn m-btn--sm" data-cost-step="5" data-gid="' + esc(g.id) + '">+5</button>' +
+              '</div>' +
+            '</div>';
+          }).join('') +
+        '</div>';
+
+      var toggleAdd = document.getElementById('o-toggle-add');
+      if (toggleAdd) {
+        toggleAdd.addEventListener('click', function () {
+          state.ownerShowAddGift = !state.ownerShowAddGift;
+          renderOwnerScreen();
+        });
+      }
+      var saveNewBtn = document.getElementById('o-save-new-gift');
+      if (saveNewBtn) {
+        saveNewBtn.addEventListener('click', function () {
+          var name = document.getElementById('o-new-name').value.trim() || '示例·便携烧水壶';
+          var cost = Math.max(1, parseInt(document.getElementById('o-new-cost').value, 10) || 35);
+          state.gifts.unshift({
+            id: 'g-demo-' + Date.now(),
+            name: name,
+            category: '茶具礼盒',
+            cost: cost,
+            hot: true,
+            badge: '新品',
+            illustration: 'thermos',
+            tint: '#ECFDF5',
+            accent: '#059669',
+            getText: name,
+            payText: '达标 ' + cost + ' ' + u + '即可',
+            desc: '手机端新增演示礼品。',
+          });
+          state.ownerShowAddGift = false;
+          renderOwnerScreen();
+          showToast('已上架「' + name + '」');
+        });
+      }
+      screen.querySelectorAll('[data-toggle-hot]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var g = findGift(btn.getAttribute('data-toggle-hot'));
+          if (!g) return;
+          g.hot = !g.hot;
+          renderOwnerScreen();
+        });
+      });
+      screen.querySelectorAll('[data-cost-step]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var g = findGift(btn.getAttribute('data-gid'));
+          var delta = parseInt(btn.getAttribute('data-cost-step'), 10);
+          if (!g) return;
+          g.cost = Math.max(1, g.cost + delta);
+          g.payText = '达标 ' + g.cost + ' ' + u + '即可';
+          renderOwnerScreen();
+        });
+      });
+      bindBossGuide(screen);
+      return;
+    }
+
+    if (state.ownerTab === 'customers') {
+      screen.innerHTML =
+        consoleHead +
+        '<div class="m-row-list">' +
+          state.customers.map(function (c) {
+            return '<div class="m-list-item">' +
+              '<div class="m-list-item__top">' +
+                '<strong style="font-size:16px;">' + esc(c.nickname) + ' (#' + esc(c.code) + ')</strong>' +
+                '<strong style="font-size:17px;color:var(--emerald);">' + c.balance + ' ' + esc(u) + '</strong>' +
+              '</div>' +
+              '<div class="m-inline-edit">' +
+                '<button type="button" class="m-btn m-btn--sm" style="flex:1;" data-adj="-10" data-ccode="' + esc(c.code) + '">-10</button>' +
+                '<button type="button" class="m-btn m-btn--sm m-btn--emerald" style="flex:1;" data-adj="10" data-ccode="' + esc(c.code) + '">+10 发币</button>' +
+              '</div>' +
+            '</div>';
+          }).join('') +
+        '</div>' +
+        '<div class="m-card" style="margin-top:10px;">' +
+          '<p class="m-card__title" style="margin-bottom:8px;">实时总流水</p>' +
+          state.logs.slice(0, 5).map(function (lg) {
+            var plus = lg.delta >= 0;
+            return '<div class="m-list-item__top" style="padding:6px 0;border-top:1px solid var(--line);font-size:14px;">' +
+              '<span>' + esc(lg.customerName) + ' · ' + esc(formatTerms(lg.reason)) + '</span>' +
+              '<strong style="color:' + (plus ? 'var(--emerald)' : 'var(--gold)') + ';">' + (plus ? '+' : '') + lg.delta + '</strong>' +
+            '</div>';
+          }).join('') +
+        '</div>';
+
+      screen.querySelectorAll('[data-adj]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var code = btn.getAttribute('data-ccode');
+          var delta = parseInt(btn.getAttribute('data-adj'), 10);
+          for (var i = 0; i < state.customers.length; i++) {
+            var c = state.customers[i];
+            if (c.code === code) {
+              if (c.balance + delta < 0) {
+                showToast('余额不能为负');
+                return;
+              }
+              c.balance += delta;
+              state.logs.unshift({
+                id: 'log-' + Date.now(),
+                customerCode: c.code,
+                customerName: c.nickname,
+                delta: delta,
+                balanceAfter: c.balance,
+                reason: delta > 0 ? '店主发币' : '店主扣减',
+                time: '刚刚',
+              });
+              renderOwnerScreen();
+              showToast('已调整并写入流水');
+              break;
+            }
+          }
+        });
+      });
+      bindBossGuide(screen);
+    }
+  }
+
+  /* ── 02 注册与过审（手风琴折叠 + 自动展开下一步） ── */
+  function renderAuditTutorial() {
+    var steps = (bundle.auditTutorial && bundle.auditTutorial.steps) || [];
+    var total = steps.length;
+    var doneCount = steps.filter(function (s) { return state.auditCompleted.indexOf(s.id) >= 0; }).length;
+    var pct = total ? Math.round((doneCount / total) * 100) : 0;
+
+    var progText = document.getElementById('audit-progress-text');
+    var progFill = document.getElementById('audit-progress-fill');
+    if (progText) progText.textContent = '已完成 ' + doneCount + ' / ' + total + ' 步 · 点击展开详情';
+    if (progFill) progFill.style.width = pct + '%';
+
+    var container = document.getElementById('audit-steps-list');
+    if (!container) return;
+
+    container.innerHTML = steps.map(function (st) {
+      var done = state.auditCompleted.indexOf(st.id) >= 0;
+      var expanded = state.auditOpenId === st.id;
+      return '<article class="acc-card ' + (done ? 'is-completed' : '') + '">' +
+        '<button type="button" class="acc-head" data-acc-toggle="' + esc(st.id) + '" aria-expanded="' + expanded + '">' +
+          '<div class="acc-head__left">' +
+            '<span class="acc-num">' + (done ? svgIcon('check', 16) : esc(st.stepNum || ('0' + st.stepNo))) + '</span>' +
+            '<div>' +
+              '<div class="acc-title">' + esc(st.title) + '</div>' +
+              '<div class="acc-badge">' + esc(st.badge) + (done ? ' · 已完成' : '') + '</div>' +
+            '</div>' +
+          '</div>' +
+          svgIcon('chevron', 18) +
+        '</button>' +
+        '<div class="acc-body" ' + (expanded ? '' : 'hidden') + '>' +
+          '<div class="path-box">去哪里点：' + esc(st.wherePath) + '</div>' +
+          '<ul class="step-bullets">' +
+            (st.bigSteps || []).map(function (bs) { return '<li>' + esc(bs) + '</li>'; }).join('') +
+          '</ul>' +
+          (st.oneLineWarning ? '<div class="pitfall-box">' + esc(st.oneLineWarning) + '</div>' : '') +
+          '<div class="acc-actions">' +
+            '<button type="button" class="m-btn ' + (done ? 'm-btn--emerald' : 'm-btn--dark') + '" style="flex:1;" data-toggle-audit="' + esc(st.id) + '">' +
+              (done ? '已完成（点此取消）' : '完成这一步') +
+            '</button>' +
+            '<button type="button" class="m-btn" data-copy-audit="' + esc(st.id) + '">' + svgIcon('copy', 15) + '复制</button>' +
+          '</div>' +
+        '</div>' +
+      '</article>';
+    }).join('');
+
+    container.querySelectorAll('[data-acc-toggle]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var id = btn.getAttribute('data-acc-toggle');
+        state.auditOpenId = state.auditOpenId === id ? '' : id;
+        renderAuditTutorial();
+      });
+    });
+
+    container.querySelectorAll('[data-toggle-audit]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var id = btn.getAttribute('data-toggle-audit');
+        var idx = state.auditCompleted.indexOf(id);
+        if (idx >= 0) {
+          state.auditCompleted.splice(idx, 1);
+        } else {
+          state.auditCompleted.push(id);
+          // 自动展开下一步
+          for (var i = 0; i < steps.length - 1; i++) {
+            if (steps[i].id === id) {
+              state.auditOpenId = steps[i + 1].id;
+              break;
+            }
+          }
+        }
+        saveCompletedSteps();
+        renderAuditTutorial();
+      });
+    });
+
+    container.querySelectorAll('[data-copy-audit]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var id = btn.getAttribute('data-copy-audit');
+        for (var i = 0; i < steps.length; i++) {
+          if (steps[i].id === id) {
+            copyText(steps[i].copySummary || steps[i].title, '已复制第 ' + steps[i].stepNo + ' 步要点');
+            break;
+          }
+        }
+      });
+    });
+  }
+
+  /* ── 03 后台怎么用（紧凑直连卡） ── */
+  function renderBackendTutorial() {
+    var steps = (bundle.backendTutorial && bundle.backendTutorial.steps) || [];
+    var container = document.getElementById('backend-steps-list');
+    if (!container) return;
+
+    container.innerHTML = steps.map(function (st) {
+      var target = st.previewTarget || { role: 'owner', tab: 'applies' };
+      return '<article class="backend-card">' +
+        '<div class="backend-card__top">' +
+          '<div class="backend-card__title-wrap">' +
+            '<span class="backend-card__ic">' + svgIcon(st.iconKey, 18) + '</span>' +
+            '<div>' +
+              '<h3 class="backend-card__title">' + esc(st.title) + '</h3>' +
+              '<span class="backend-card__path">' + esc(st.entryPath) + '</span>' +
+            '</div>' +
+          '</div>' +
+          '<button type="button" class="backend-try-btn" data-jump-tab="' + esc(target.tab) + '">去实机试一下 →</button>' +
+        '</div>' +
+        '<ul class="step-bullets" style="margin:0;">' +
+          (st.bigSteps || []).map(function (bs) { return '<li>' + esc(formatTerms(bs)) + '</li>'; }).join('') +
+        '</ul>' +
+      '</article>';
+    }).join('');
+
+    container.querySelectorAll('[data-jump-tab]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        state.perspective = 'owner';
+        state.ownerTab = btn.getAttribute('data-jump-tab') || 'applies';
+        switchSection('preview');
+        renderAll();
+        var frame = document.getElementById('phone-frame');
+        if (frame && frame.scrollIntoView) {
+          frame.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        showToast('已切到对应手机后台，可直接试用');
+      });
+    });
+  }
+
+  /* ── 浮层 1：高定黑金微信分享名片 ── */
+  function openPosterModal() {
+    var mask = document.getElementById('poster-modal-mask');
+    var body = document.getElementById('poster-card-body');
+    var tip = document.getElementById('poster-modal-tip');
+    var pc = (bundle.marketingData && bundle.marketingData.posterCard) || {};
+    if (!mask || !body) return;
+    if (tip) tip.textContent = '手机截屏上方名片，即可直接发进微信聊天';
+    body.innerHTML =
+      '<span class="poster-card__kicker">微信口碑定制 · 零风险试错</span>' +
+      '<h2 class="poster-card__title">' + esc(pc.headline || '专属礼品册小程序定制') + '</h2>' +
+      '<p class="poster-card__sub">' + esc(pc.subline || '想要功能随便提 · 随时改到满意 · 不满意不要钱') + '</p>' +
+      '<div class="poster-trio">' +
+        (pc.trio || []).map(function (item) {
+          return '<div class="poster-trio-item">' +
+            '<strong>' + esc((item.num || '') + ' · ' + item.title) + '</strong>' +
+            '<span>' + esc(item.text) + '</span>' +
+          '</div>';
+        }).join('') +
+      '</div>' +
+      '<div class="poster-card__foot">' + esc(pc.footerNote || '长按或截屏转发微信朋友') + '</div>';
+    mask.hidden = false;
+  }
+
+  /* ── 浮层 2：定制功能点播与对比 ── */
+  function openCustomModal() {
+    var mask = document.getElementById('poster-modal-mask');
+    var body = document.getElementById('poster-card-body');
+    var tip = document.getElementById('poster-modal-tip');
+    var md = bundle.marketingData || {};
+    if (!mask || !body) return;
+    if (tip) tip.textContent = '想要什么功能都可以提，随时改到满意为止';
+    body.style.background = '#FFFFFF';
+    body.style.color = '#0F172A';
+    body.style.borderColor = '#E2E8F0';
+    body.innerHTML =
+      '<h2 class="poster-card__title" style="margin-top:0;font-size:20px;">为什么选择 1 对 1 口碑定制</h2>' +
+      '<div style="margin-bottom:12px;">' +
+        (md.comparisonTable || []).map(function (r) {
+          return '<div class="compare-row">' +
+            '<strong style="font-size:15px;">' + esc(r.dimension) + '</strong>' +
+            '<div class="compare-row__cols">' +
+              '<div class="compare-col--market">普通模板：' + esc(r.market) + '</div>' +
+              '<div class="compare-col--ours">我们：' + esc(r.ours) + '</div>' +
+            '</div>' +
+          '</div>';
+        }).join('') +
+      '</div>' +
+      '<div style="font-size:15px;font-weight:800;margin-bottom:8px;">常见可加功能示例</div>' +
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">' +
+        (md.customFeatureExamples || []).map(function (f) {
+          return '<div style="padding:8px;border-radius:10px;background:#F8FAFC;border:1px solid #E2E8F0;font-size:14px;">' +
+            '<strong>' + esc(f.tag) + '</strong>' +
+            '<div style="color:#64748B;margin-top:2px;">' + esc(f.desc) + '</div>' +
+          '</div>';
+        }).join('') +
+      '</div>';
+    mask.hidden = false;
+  }
+
+  function closePosterModal() {
+    var mask = document.getElementById('poster-modal-mask');
+    var body = document.getElementById('poster-card-body');
+    if (body) {
+      body.style.background = '';
+      body.style.color = '';
+      body.style.borderColor = '';
+    }
+    if (mask) mask.hidden = true;
+  }
+
+  function renderAll() {
+    renderHero();
+    renderPainVsGain();
+    renderThemePicker();
+    renderCurrencyPills();
+    renderPhone();
+    renderConfigurator();
+    renderAuditTutorial();
+    renderBackendTutorial();
+  }
+
+  bindGlobalNav();
+  renderAll();
+
+  if (typeof setInterval === 'function') {
+    setInterval(function () {
+      var tickers = (bundle.previewData.customerScreens.liveTickers) || [];
+      if (!tickers.length) return;
+      state.tickerIndex = (state.tickerIndex + 1) % tickers.length;
+      var bar = document.getElementById('live-ticker-bar');
+      if (bar) {
+        var spans = bar.querySelectorAll('span');
+        if (spans[1]) spans[1].textContent = tickers[state.tickerIndex];
+      }
+    }, 3500);
+  }
+})();
+
+</script>
+</body>
+</html>
